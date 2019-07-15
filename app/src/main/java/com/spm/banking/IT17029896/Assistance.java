@@ -35,14 +35,14 @@ public class Assistance
     }
 
     //Can Set Message Title
-    public void AlertMessage(String message, Context context, String title)
+    public void AlertMessage(String message, final Context context, String title)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setTitle(title);
 
-        builder.setPositiveButton("ok",
+        builder.setNeutralButton("ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

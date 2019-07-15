@@ -38,10 +38,22 @@ public class Login_Page extends AppCompatActivity {
         startActivity(new Intent(Login_Page.this,Register.class));
     }
 
+    public void forgotPW(View V)
+    {
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.fade_in);
+        startActivity(new Intent(Login_Page.this,ResetPassword.class));
+    }
+
     public void loginButton(View v)
     {
+        if(username.length() == 0 || password.length() == 0)
+        {
+            assistance.AlertMessage("Please fill both username & password",Login_Page.this);
+            return;
+        }
+
         SQLiteDatabase DB = DbHelper.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("SELECT password FROM logins WHERE username ='"+username.getText().toString()+"'",null);
+        Cursor cursor = DB.rawQuery("SELECT password FROM logins",null);
         cursor.moveToFirst();
         do
         {

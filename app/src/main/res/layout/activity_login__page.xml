@@ -84,7 +84,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:imeActionLabel="dsf"
+        android:inputType="textPassword"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2" />
@@ -150,16 +151,15 @@
     <TextView
         android:id="@+id/forgot_pw"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="36dp"
-        android:text="Forgot Password?"
+        android:onClick="forgotPW"
+        android:text="Forgot/Change Password."
         android:textColor="#1E268A"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/login_but"
-        app:layout_constraintStart_toStartOf="@+id/login_but"
         app:layout_constraintTop_toBottomOf="@+id/login_but"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>
