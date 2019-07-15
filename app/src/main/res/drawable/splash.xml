@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/HNB_Orange"/>
+    <item
+        android:width="350dp"
+        android:height="350dp"
+        android:drawable="@drawable/hnb_logo"
+        android:gravity="center" />
+</layer-list>
