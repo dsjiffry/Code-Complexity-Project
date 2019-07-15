@@ -97,7 +97,6 @@ public class Register extends AppCompatActivity {
         assistance.AlertMessage("Your details have been sent to the bank. They will email you your username and Password",Register.this,"Request Sent");
 
 
-
     }
 
 
