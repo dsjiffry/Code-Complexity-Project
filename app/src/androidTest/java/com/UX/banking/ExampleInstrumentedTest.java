@@ -1,4 +1,4 @@
-package com.spm.banking;
+package com.UX.banking;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.spm.banking", appContext.getPackageName());
+        assertEquals("com.UX.banking", appContext.getPackageName());
     }
 }

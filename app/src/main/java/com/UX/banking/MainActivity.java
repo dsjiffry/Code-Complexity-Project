@@ -1,4 +1,4 @@
-package com.spm.banking;
+package com.UX.banking;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.spm.banking.IT17029896.Assistance;
-import com.spm.banking.IT17029896.Login_Page;
+import com.UX.banking.IT17029896.Assistance;
+import com.UX.banking.IT17029896.Login_Page;
 
 public class MainActivity extends AppCompatActivity {
 
