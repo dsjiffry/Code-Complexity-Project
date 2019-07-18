@@ -1,4 +1,4 @@
-package com.spm.banking;
+package com.UX.banking;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

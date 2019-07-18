@@ -1,4 +1,4 @@
-package com.spm.banking.IT17029896;
+package com.UX.banking.IT17029896;
 
 import android.content.Context;
 import android.content.DialogInterface;

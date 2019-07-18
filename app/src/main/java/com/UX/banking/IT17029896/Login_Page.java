@@ -1,4 +1,4 @@
-package com.spm.banking.IT17029896;
+package com.UX.banking.IT17029896;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.spm.banking.DBHandler;
-import com.spm.banking.R;
+import com.UX.banking.DBHandler;
+import com.UX.banking.R;
 
-import static com.spm.banking.MainActivity.assistance;
+import static com.UX.banking.MainActivity.assistance;
 
 public class Login_Page extends AppCompatActivity {
 
