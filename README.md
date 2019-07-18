@@ -1,2 +1,2 @@
-# SPM-banking-app
-SPM android Project
+# UX-banking-app
+UX android Project
