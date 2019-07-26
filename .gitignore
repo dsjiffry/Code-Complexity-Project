@@ -1,3 +1,5 @@
+*.class
+
 # Built application files
 /*/build/
 
