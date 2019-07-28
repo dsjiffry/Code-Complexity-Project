@@ -31,6 +31,8 @@ public class MainFrame extends javax.swing.JFrame
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jFileChooser1 = new javax.swing.JFileChooser();
+        codeType = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         textArea1 = new java.awt.TextArea();
@@ -54,17 +56,47 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        codeType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "C++" }));
+        codeType.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                codeTypeActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("Project Type:");
+        jTextField1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(codeType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codeType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Directory", jPanel2);
@@ -106,11 +138,11 @@ public class MainFrame extends javax.swing.JFrame
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Submit1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(Submit1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -218,17 +250,36 @@ public class MainFrame extends javax.swing.JFrame
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jFileChooser1ActionPerformed
     {//GEN-HEADEREND:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
+        Thread thread = new Thread() {
+             public void run() 
+             {
+               CodeComplexity CC = new CodeComplexity(jFileChooser1.getSelectedFile().getAbsolutePath().toString(),codeType.getSelectedItem().toString());
+               codeType.setVisible(true);
+               jTextField1.setText("Project Type:");
+             }  
+         };
+        thread.setDaemon(true);
+        
         if(jTabbedPane1.getSelectedIndex() != 0)
         {
             return;
         }
+        
         if(evt.getActionCommand().equalsIgnoreCase("CancelSelection"))
         {
-            System.exit(0);
+            System.exit(0);            
         }
+        else
+        {        
+            if(!thread.isAlive())
+            {
+                thread.start();
+                codeType.setVisible(false);
+                jTextField1.setText("Loading.");
+            }
+        }
+                
         
-        CodeComplexity CC = new CodeComplexity(jFileChooser1.getSelectedFile().getAbsolutePath().toString());
         
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
@@ -244,30 +295,39 @@ public class MainFrame extends javax.swing.JFrame
         {
             return;
         }
-        
+        //Emptying the table
         DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
         model.setRowCount(0);
-        
-        
         CodeComplexity CC = new CodeComplexity();
+        
+        // passing line by line from text area
         for (String line : textArea1.getText().split("\\n"))
         {
             if(!line.trim().isEmpty())
             {
                 CC.codeOnly(line);
-
                 Object JFill[] = {line,CC.getGrades()};
-                
                 model.addRow(JFill);
-
                 CC.resetGrades(); 
+                
+                jTabbedPane1.setSelectedIndex(2);
             }   
         }
         
         
         
-        jTabbedPane1.setSelectedIndex(2);
+        
     }//GEN-LAST:event_Submit1ActionPerformed
+
+    private void codeTypeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_codeTypeActionPerformed
+    {//GEN-HEADEREND:event_codeTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codeTypeActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jTextField1ActionPerformed
+    {//GEN-HEADEREND:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,6 +377,7 @@ public class MainFrame extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button Cancel;
     private java.awt.Button Submit1;
+    private javax.swing.JComboBox<String> codeType;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -325,6 +386,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable resultsTable;
     private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
