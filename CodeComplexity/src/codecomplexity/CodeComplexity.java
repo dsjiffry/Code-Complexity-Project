@@ -17,14 +17,24 @@ public class CodeComplexity
    public boolean isComment = false;
    public int braces = 0;
    public boolean isloop = false;
+   public boolean isJava = false;
 
    public CodeComplexity(){}
     
-   public CodeComplexity(String path)
+   public CodeComplexity(String path,String type)
    {
        try
        {
-           getEveryFile(path,"java");
+           if(type.equalsIgnoreCase("java"))
+           {
+               isJava = true;
+               getEveryFile(path,"java");
+           }
+           else
+           {
+               getEveryFile(path,"cpp");
+           }
+           
        } catch (IOException e)
        {
            e.printStackTrace();
@@ -93,6 +103,7 @@ public class CodeComplexity
            }
            else
            {
+               //multiline comment is over so reset isComment
                isComment = false;
                int end = line.indexOf("*/");
                line = line.substring(end,line.length());
@@ -121,6 +132,7 @@ public class CodeComplexity
            int end = line.indexOf("*/");
            if(end == -1)
            {
+               //isComment true means the multiline comment is not over.
                isComment = true;
                return;
            }
@@ -142,15 +154,15 @@ public class CodeComplexity
    private int miscellaneousOperators(String line)
    {
        int total = 0;
-       total = (int) (total + line.chars().filter(ch -> ch =='.').count());
-       total = (int) (total + line.chars().filter(ch -> ch ==',').count());
-
+       
+       //Detecting .
+       total = total + ((int)line.chars().filter(ch -> ch =='.').count());
+       //Detecting ,
+       total = total + ((int)line.chars().filter(ch -> ch ==',').count());
        //Detecting ->
        total = total + ((line.length() - line.replace("->", "").length())/2);
-
        //Detecting ::
        total = total + ((line.length() - line.replace("::", "").length())/2);
-
 
        return total;
    }
