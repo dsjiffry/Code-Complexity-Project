@@ -44,15 +44,6 @@ public class CodeComplexity
 
 
    /**
-    * Used for directly passing code instead of directories
-    * @param line The line of code to grade
-    */
-    public void codeOnly(String line)
-    {
-        forEveryLine(line);
-    }
-
-   /**
     * Identifying every file in a location by extension
     * @param path The folder which the method will scan recursively
     * @param extension The extension of the files to be scanned
@@ -143,9 +134,12 @@ public class CodeComplexity
 
        //Calling All calculation methods
        Cs += miscellaneousOperators(line);
-       Cs += conditionalCS(line);
+       Cs += LogicalOperators(line);
    }
 
+   
+   //////////////////////////////////////////////// Identifing Operators  ////////////////////////////////////////////////
+   
    /**
     * Identifies Miscellaneous operators in line of Code.
     * @param line The line to check
@@ -154,6 +148,13 @@ public class CodeComplexity
    private int miscellaneousOperators(String line)
    {
        int total = 0;
+       if(!isJava)  //Is C++
+       {
+            //Detecting &
+            total = total + ((int)line.chars().filter(ch -> ch =='&').count())*2;
+            //Detecting .
+            total = total + ((int)line.chars().filter(ch -> ch =='*').count())*2;  
+       }
        
        //Detecting .
        total = total + ((int)line.chars().filter(ch -> ch =='.').count());
@@ -166,38 +167,53 @@ public class CodeComplexity
 
        return total;
    }
-
+   
    /**
-    * Identifying Conditional control structures in code
-    * @param line The code line to check
-    * @return The number of points for Ctc
+    * Identifies Logical operators in line of Code.
+    * @param line The line to check
+    * @return The number of points for Cs
     */
-   private int conditionalCS(String line)
+   private int LogicalOperators(String line)
    {
        int total = 0;
+       
+       //Detecting &&
+       total = total + ((line.length() - line.replace("&&", "").length())/2);
+       //Detecting ||
+       total = total + ((line.length() - line.replace("||", "").length())/2);
+       //Detecting !
+       total = total + ((int)line.chars().filter(ch -> ch =='!').count());
 
-       if(line.contains("if"))
-       {
-           total++;
 
-           //Handling && and & characters
-           total = total + ((line.length() - line.replace("&&", "").length())/2);
-           line = line.replace("&&","");
-           total = (int) (total + line.chars().filter(ch -> ch =='&').count());
-
-           //Handling || and | characters
-           total = total + ((line.length() - line.replace("||", "").length())/2);
-           line = line.replace("||","");
-           total = (int) (total + line.chars().filter(ch -> ch =='|').count());
-
-       }
        return total;
    }
    
+   
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   /**
+   * Used for directly passing code instead of directories
+   * @param line The line of code to grade
+   */
+   public void codeOnly(String line)
+   {
+       forEveryLine(line);
+   }
+ 
    public int getGrades()
    {
         return Cs;
    }
+   
       public void resetGrades()
    {
         Cs = 0;
