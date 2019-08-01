@@ -138,8 +138,8 @@ public class CodeComplexity
 
        //Calling All calculation methods
 //      Cs += miscellaneousOperators(line);
-//      Cs += LogicalOperators(line);
-        Cs += AssignmentOperators(line);
+      Cs += LogicalOperators(line);
+//        Cs += AssignmentOperators(line);
    }
 
    
@@ -163,13 +163,13 @@ public class CodeComplexity
        }
        
        //Detecting .
-       total = total + ((int)line.chars().filter(ch -> ch =='.').count());
+       total = total + ((line.length() - line.replaceAll("\\.", "").length()));
        //Detecting ,
-       total = total + ((int)line.chars().filter(ch -> ch ==',').count());
+       total = total + ((line.length() - line.replaceAll(",", "").length()));
        //Detecting ->
-       total = total + ((line.length() - line.replace("->", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("->", "").length())/2);
        //Detecting ::
-       total = total + ((line.length() - line.replace("::", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("::", "").length())/2);
 
        return total;
    }
@@ -184,10 +184,10 @@ public class CodeComplexity
        int total = 0;
        
        //Detecting &&
-       total = total + ((line.length() - line.replace("&&", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("&&", "").length())/2);
        //Detecting ||
-       total = total + ((line.length() - line.replace("||", "").length())/2);
-       //Detecting !
+       total = total + ((line.length() - line.replaceAll("\\|\\|", "").length())/2);
+//       //Detecting !
        total = total + ((line.length() - line.replaceAll("!(?!=)", "").length()));
 
 
@@ -204,13 +204,13 @@ public class CodeComplexity
        int total = 0;
        
        //Detecting +=
-       total = total + ((line.length() - line.replace("+=", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("\\+=", "").length())/2);
        //Detecting -=
-       total = total + ((line.length() - line.replace("-=", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("\\-=", "").length())/2);
        //Detecting *=
-       total = total + ((line.length() - line.replace("*=", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("\\*=", "").length())/2);
        //Detecting /= 
-       total = total + ((line.length() - line.replace("/= ", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("\\/=", "").length())/2);
        //Detecting = 
        total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])=(?![&=])", "").length()));
 
