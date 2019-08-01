@@ -138,8 +138,8 @@ public class CodeComplexity
 
        //Calling All calculation methods
 //      Cs += miscellaneousOperators(line);
-      Cs += LogicalOperators(line);
-//        Cs += AssignmentOperators(line);
+//      Cs += logicalOperators(line);
+        Cs += assignmentOperators(line);
    }
 
    
@@ -150,7 +150,7 @@ public class CodeComplexity
     * @param line The line to check
     * @return The number of points for Cs
     */
-   private int miscellaneousOperators(String line)
+   protected int miscellaneousOperators(String line)
    {
        int total = 0;
        if(!isJava)  //Is C++
@@ -179,7 +179,7 @@ public class CodeComplexity
     * @param line The line to check
     * @return The number of points for Cs
     */
-   private int LogicalOperators(String line)
+   protected int logicalOperators(String line)
    {
        int total = 0;
        
@@ -199,7 +199,7 @@ public class CodeComplexity
     * @param line The line to check
     * @return The number of points for Cs
     */
-   private int AssignmentOperators(String line)
+   protected int assignmentOperators(String line)
    {
        int total = 0;
        
@@ -213,8 +213,21 @@ public class CodeComplexity
        total = total + ((line.length() - line.replaceAll("\\/=", "").length())/2);
        //Detecting = 
        total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])=(?![&=])", "").length()));
-
-
+       //Detecting >>>=
+       total = total + ((line.length() - line.replaceAll(">>>=", "").length())/4);
+       //Detecting |=
+       total = total + ((line.length() - line.replaceAll("\\|=", "").length())/2);
+       //Detecting &=
+       total = total + ((line.length() - line.replaceAll("&=", "").length())/2);
+       //Detecting %=
+       total = total + ((line.length() - line.replaceAll("%=", "").length())/2);
+       //Detecting <<=
+       total = total + ((line.length() - line.replaceAll("<<=", "").length())/2);
+       //Detecting >>=
+       total = total + ((line.length() - line.replaceAll("(?<!>)>>=", "").length())/2);
+       //Detecting ^=
+       total = total + ((line.length() - line.replaceAll("\\^=", "").length())/2);
+       
        return total;
    }
    
@@ -228,6 +241,7 @@ public class CodeComplexity
             (?<!&)&(?![&=])                     '&' not preceded by a '&' or followed by characters {&=}
             \*(?!=)                             '*' not followed by a '='
             (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters {=\+\-\*!/><%&^|'} or followed by '='
+            (?<!>)>>=                           '>>=' not preceded by '>'
         
    */
    
