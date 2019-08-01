@@ -130,11 +130,16 @@ public class CodeComplexity
            line = line.substring(0,begin) + line.substring(end,line.length());
 
        }
+       if(line.contains("\""))
+       {
+           // TODO Identify and grade strings
+       }
 
 
        //Calling All calculation methods
-       Cs += miscellaneousOperators(line);
-       Cs += LogicalOperators(line);
+//      Cs += miscellaneousOperators(line);
+//      Cs += LogicalOperators(line);
+        Cs += AssignmentOperators(line);
    }
 
    
@@ -150,10 +155,11 @@ public class CodeComplexity
        int total = 0;
        if(!isJava)  //Is C++
        {
+            // Multiply by 2 since each operator is awarded 2 marks
             //Detecting &
-            total = total + ((int)line.chars().filter(ch -> ch =='&').count())*2;
+            total = total + ((line.length() - line.replaceAll("(?<!&)&(?![&=])", "").length()))*2;
             //Detecting .
-            total = total + ((int)line.chars().filter(ch -> ch =='*').count())*2;  
+            total = total + ((line.length() - line.replaceAll("\\*(?!=)", "").length()))*2;  
        }
        
        //Detecting .
@@ -182,7 +188,31 @@ public class CodeComplexity
        //Detecting ||
        total = total + ((line.length() - line.replace("||", "").length())/2);
        //Detecting !
-       total = total + ((int)line.chars().filter(ch -> ch =='!').count());
+       total = total + ((line.length() - line.replaceAll("!(?!=)", "").length()));
+
+
+       return total;
+   }
+   
+   /**
+    * Identifies Assignment  operators in line of Code.
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
+   private int AssignmentOperators(String line)
+   {
+       int total = 0;
+       
+       //Detecting +=
+       total = total + ((line.length() - line.replace("+=", "").length())/2);
+       //Detecting -=
+       total = total + ((line.length() - line.replace("-=", "").length())/2);
+       //Detecting *=
+       total = total + ((line.length() - line.replace("*=", "").length())/2);
+       //Detecting /= 
+       total = total + ((line.length() - line.replace("/= ", "").length())/2);
+       //Detecting = 
+       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])=(?![&=])", "").length()));
 
 
        return total;
@@ -190,6 +220,19 @@ public class CodeComplexity
    
    
    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   /*
+        Regex Expressions Explained:
+            !(?!=)                              '!' not followed by '='
+            (?<!&)&(?![&=])                     '&' not preceded by a '&' or followed by characters {&=}
+            \*(?!=)                             '*' not followed by a '='
+            (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters {=\+\-\*!/><%&^|'} or followed by '='
+        
+   */
+   
+   
+   
    
    
    
