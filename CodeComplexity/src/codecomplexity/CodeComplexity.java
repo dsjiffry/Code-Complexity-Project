@@ -139,7 +139,8 @@ public class CodeComplexity
        //Calling All calculation methods
 //      Cs += miscellaneousOperators(line);
 //      Cs += logicalOperators(line);
-        Cs += assignmentOperators(line);
+        //Cs += assignmentOperators(line);
+        Cs += arithmeticOperators(line);
    }
 
    
@@ -228,6 +229,31 @@ public class CodeComplexity
        //Detecting ^=
        total = total + ((line.length() - line.replaceAll("\\^=", "").length())/2);
        
+       return total;
+   }
+   
+   //Identify arithmetic operators in a line of code
+   
+   protected int arithmeticOperators(String line)
+   {
+       int total = 0;
+       
+       //Detect +
+       total = total + ((line.length() - line.replaceAll("\\+", "").length())/2);
+       //Detect -
+       total = total + ((line.length() - line.replaceAll("\\-", "").length())/2);
+       //Detect *
+       total = total + ((line.length() - line.replaceAll("\\*(?!=)", "").length()));
+       //Detect /
+       total = total + ((line.length() - line.replaceAll("/(?!=)", "").length()));
+       //Detect %
+       total = total + ((line.length() - line.replaceAll("%(?!=)", "").length()));
+       //Detect ++
+       total = total + ((line.length() - line.replaceAll("\\++", "").length())/2);
+       //Detect --
+       total = total + ((line.length() - line.replaceAll("\\--", "").length())/2);
+
+
        return total;
    }
    
