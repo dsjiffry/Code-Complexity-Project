@@ -140,7 +140,8 @@ public class CodeComplexity
 //      Cs += miscellaneousOperators(line);
 //      Cs += logicalOperators(line);
         //Cs += assignmentOperators(line);
-        Cs += arithmeticOperators(line);
+        //Cs += arithmeticOperators(line);
+        Cs += relationalOperators(line);
    }
 
    
@@ -253,6 +254,28 @@ public class CodeComplexity
        //Detect --
        total = total + ((line.length() - line.replaceAll("\\--", "").length())/2);
 
+
+       return total;
+   }
+   
+   //identify relational operators in a line of code
+   
+   protected int relationalOperators(String line)
+   {
+       int total = 0;
+       
+       //Detect ==
+       total = total + ((line.length() - line.replaceAll("\\==", "").length())/2);
+       //Detect !=
+       total = total + ((line.length() - line.replaceAll("\\!=", "").length())/2);
+       //Detect >
+       total = total + ((line.length() - line.replaceAll("\\>(?!=)", "").length())/2);
+       //Detect <
+       //total = total + ((line.length() - line.replaceAll("\\<(?!=)", "").length())); //Error: count <<= as 1
+       //Detect >=
+       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])>=(?![&=])", "").length())/2);
+       //Detect <=
+       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])<=(?![&=])", "").length())/2);
 
        return total;
    }
