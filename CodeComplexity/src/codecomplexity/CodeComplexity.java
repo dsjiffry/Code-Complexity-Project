@@ -139,7 +139,9 @@ public class CodeComplexity
        //Calling All calculation methods
 //      Cs += miscellaneousOperators(line);
 //      Cs += logicalOperators(line);
-        Cs += assignmentOperators(line);
+        //Cs += assignmentOperators(line);
+        //Cs += arithmeticOperators(line);
+        Cs += relationalOperators(line);
    }
 
    
@@ -230,6 +232,7 @@ public class CodeComplexity
        
        return total;
    }
+  
    /**
     * Identifies manipulators in line of Code.
     * @param line The line to check
@@ -248,6 +251,60 @@ public class CodeComplexity
        }
        return total;
    }
+   
+   /**
+    * Identify arithmetic operators in a line of code
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
+   protected int arithmeticOperators(String line)
+   {
+       int total = 0;
+       
+       //Detect +
+       total = total + ((line.length() - line.replaceAll("\\+", "").length())/2);
+       //Detect -
+       total = total + ((line.length() - line.replaceAll("\\-", "").length())/2);
+       //Detect *
+       total = total + ((line.length() - line.replaceAll("\\*(?!=)", "").length()));
+       //Detect /
+       total = total + ((line.length() - line.replaceAll("/(?!=)", "").length()));
+       //Detect %
+       total = total + ((line.length() - line.replaceAll("%(?!=)", "").length()));
+       //Detect ++
+       total = total + ((line.length() - line.replaceAll("\\++", "").length())/2);
+       //Detect --
+       total = total + ((line.length() - line.replaceAll("\\--", "").length())/2);
+
+
+       return total;
+   }
+   
+   /**
+    * identify relational operators in a line of code
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
+   protected int relationalOperators(String line)
+   {
+       int total = 0;
+       
+       //Detect ==
+       total = total + ((line.length() - line.replaceAll("\\==", "").length())/2);
+       //Detect !=
+       total = total + ((line.length() - line.replaceAll("\\!=", "").length())/2);
+       //Detect >
+       total = total + ((line.length() - line.replaceAll("\\>(?!=)", "").length())/2);
+       //Detect <
+       //total = total + ((line.length() - line.replaceAll("\\<(?!=)", "").length())); //Error: count <<= as 1
+       //Detect >=
+       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])>=(?![&=])", "").length())/2);
+       //Detect <=
+       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])<=(?![&=])", "").length())/2);
+
+       return total;
+   }
+   
    
    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
