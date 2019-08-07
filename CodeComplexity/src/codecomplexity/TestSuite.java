@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package codecomplexity;
-import org.testng.Assert;
-import org.testng.annotations.Test;   
 
 /**
  *
@@ -22,7 +20,6 @@ public class TestSuite
     }
     
     
-    @Test
     public void testMiscellaneousOperators()
     {
         CodeComplexity testing = new CodeComplexity();
@@ -31,11 +28,10 @@ public class TestSuite
                             "i.2;" +
                             "i,5;";
         
-        Assert.assertEquals(testing.miscellaneousOperators(testInput), 4, "Miscellaneous Operator Test Failed");
+        assertCheck(testing.miscellaneousOperators(testInput) == 4);
         System.out.println("Miscellaneous Operator Test Successful");
     }
     
-    @Test
     public void testLogicalOperators()
     {
         CodeComplexity testing = new CodeComplexity();
@@ -43,11 +39,10 @@ public class TestSuite
                             "i||5 | |=" +
                             "!true i!=5";
         
-        Assert.assertEquals(testing.logicalOperators(testInput), 3, "Logical Operator Test Failed");
+        assertCheck(testing.logicalOperators(testInput) ==  3);
         System.out.println("Logical Operator Test Successful");
     }
     
-    @Test 
     public void testAssignmentOperators()
     {
         CodeComplexity testing = new CodeComplexity();
@@ -65,11 +60,11 @@ public class TestSuite
                             "i >>=34;\n" +
                             "i^=9;";
         
-        Assert.assertEquals(testing.assignmentOperators(testInput), 12, "Assignment Operator Test Failed");
+        assertCheck(testing.assignmentOperators(testInput) == 12);
         System.out.println("Assignment Operator Test Successful");
     }
     
-    @Test 
+
     public void testManipulators()
     {
         CodeComplexity testing = new CodeComplexity();
@@ -79,7 +74,7 @@ public class TestSuite
                             "cout << 5;\n" +
                             "cin >> 2;\n";
         
-        Assert.assertEquals(testing.manipulators(testInput), 4, "Manipulators Test Failed");
+        assertCheck(testing.manipulators(testInput) == 4);
         System.out.println("Manipulators Test Successful");
     }
     
@@ -92,13 +87,26 @@ public class TestSuite
     
     
     
+    //*******************************************************************************************************************************
+    // Methods
     
-    
-    
-    
-    
-    
-    
+    /**
+     * To avoid passing -ea in VM arguments
+    */
+    public void assertCheck(boolean bool)
+    {
+        if(!bool)
+        {
+            //Getting the calling methods name from stacktrace
+            StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+            StackTraceElement e = stacktrace[2];
+            String methodName = e.getMethodName();
+            
+            
+            System.err.println("Assertion Fail in "+methodName);
+            System.exit(-1);
+        }
+    }
     
     public static void main(String[] args)
     {
