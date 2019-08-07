@@ -231,6 +231,19 @@ public class CodeComplexity
        return total;
    }
    
+   protected int Manipulators(String line)
+   {
+       int total = 0;
+       line = line.replaceAll(" ", "");
+       if(!isJava)  //Is C++
+       {
+           //Detecting 'cout<<'
+           total = total + ((line.length() - line.replaceAll("cout<<", "").length())/6);
+           //Detecting 'cin>>'
+           total = total + ((line.length() - line.replaceAll("cin>>", "").length())/5);
+       }
+       return total;
+   }
    
    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
