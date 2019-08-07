@@ -189,7 +189,7 @@ public class CodeComplexity
        total = total + ((line.length() - line.replaceAll("&&", "").length())/2);
        //Detecting ||
        total = total + ((line.length() - line.replaceAll("\\|\\|", "").length())/2);
-//       //Detecting !
+       //Detecting !
        total = total + ((line.length() - line.replaceAll("!(?!=)", "").length()));
 
 
@@ -197,7 +197,7 @@ public class CodeComplexity
    }
    
    /**
-    * Identifies Assignment  operators in line of Code.
+    * Identifies Assignment operators in line of Code.
     * @param line The line to check
     * @return The number of points for Cs
     */
@@ -232,9 +232,31 @@ public class CodeComplexity
        
        return total;
    }
+  
+   /**
+    * Identifies Manipulators in line of Code.
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
+   protected int Manipulators(String line)
+   {
+       int total = 0;
+       line = line.replaceAll(" ", "");
+       if(!isJava)  //Is C++
+       {
+           //Detecting 'cout<<'
+           total = total + ((line.length() - line.replaceAll("cout<<", "").length())/6);
+           //Detecting 'cin>>'
+           total = total + ((line.length() - line.replaceAll("cin>>", "").length())/5);
+       }
+       return total;
+   }
    
-   //Identify arithmetic operators in a line of code
-   
+   /**
+    * Identify arithmetic operators in a line of code
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
    protected int arithmeticOperators(String line)
    {
        int total = 0;
@@ -258,8 +280,11 @@ public class CodeComplexity
        return total;
    }
    
-   //identify relational operators in a line of code
-   
+   /**
+    * identify relational operators in a line of code
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
    protected int relationalOperators(String line)
    {
        int total = 0;
