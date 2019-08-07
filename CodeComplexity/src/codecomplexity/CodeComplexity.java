@@ -195,7 +195,7 @@ public class CodeComplexity
    }
    
    /**
-    * Identifies Assignment  operators in line of Code.
+    * Identifies Assignment operators in line of Code.
     * @param line The line to check
     * @return The number of points for Cs
     */
@@ -230,7 +230,11 @@ public class CodeComplexity
        
        return total;
    }
-   
+   /**
+    * Identifies Manipulators in line of Code.
+    * @param line The line to check
+    * @return The number of points for Cs
+    */
    protected int Manipulators(String line)
    {
        int total = 0;
