@@ -234,11 +234,11 @@ public class CodeComplexity
    }
   
    /**
-    * Identifies Manipulators in line of Code.
+    * Identifies manipulators in line of Code.
     * @param line The line to check
     * @return The number of points for Cs
     */
-   protected int Manipulators(String line)
+   protected int manipulators(String line)
    {
        int total = 0;
        line = line.replaceAll(" ", "");
@@ -312,9 +312,9 @@ public class CodeComplexity
    /*
         Regex Expressions Explained:
             !(?!=)                              '!' not followed by '='
-            (?<!&)&(?![&=])                     '&' not preceded by a '&' or followed by characters {&=}
+            (?<!&)&(?![&=])                     '&' not preceded by a '&' or followed by characters { &= }
             \*(?!=)                             '*' not followed by a '='
-            (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters {=\+\-\*!/><%&^|'} or followed by '='
+            (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters { =\+\-\*!/><%&^|' } or followed by '='
             (?<!>)>>=                           '>>=' not preceded by '>'
         
    */
