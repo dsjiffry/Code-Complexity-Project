@@ -18,6 +18,7 @@ public class TestSuite
         testMiscellaneousOperators();
         testLogicalOperators();
         testAssignmentOperators();
+        testManipulators();
     }
     
     
@@ -68,6 +69,19 @@ public class TestSuite
         System.out.println("Assignment Operator Test Successful");
     }
     
+    @Test 
+    public void testManipulators()
+    {
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i += 10;\n" +
+                            "cout<< 5;\n" +
+                            "cin>> 2;\n" +
+                            "cout << 5;\n" +
+                            "cin >> 2;\n";
+        
+        Assert.assertEquals(testing.manipulators(testInput), 4, "Manipulators Test Failed");
+        System.out.println("Manipulators Test Successful");
+    }
     
     
     
