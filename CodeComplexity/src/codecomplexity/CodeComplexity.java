@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
 public class CodeComplexity
@@ -18,6 +19,7 @@ public class CodeComplexity
    public int braces = 0;
    public boolean isloop = false;
    public boolean isJava = false;
+   public HashMap<String, Integer> results = new HashMap<>(); 
 
    public CodeComplexity(){}
     
@@ -72,8 +74,8 @@ public class CodeComplexity
        {
            e.printStackTrace();
        }
-
-       System.out.println(path.getFileName()+": Cs -> "+Cs);
+       
+       results.put(path.getFileName().toString(), Cs);
    }
 
    /**
@@ -137,11 +139,13 @@ public class CodeComplexity
 
 
        //Calling All calculation methods
-//      Cs += miscellaneousOperators(line);
-//      Cs += logicalOperators(line);
-        //Cs += assignmentOperators(line);
-        //Cs += arithmeticOperators(line);
-        Cs += relationalOperators(line);
+      Cs += miscellaneousOperators(line);
+      Cs += logicalOperators(line);
+      Cs += assignmentOperators(line);
+      Cs += arithmeticOperators(line);
+      Cs += relationalOperators(line);
+      Cs += manipulators(line);
+
    }
 
    
@@ -345,9 +349,13 @@ public class CodeComplexity
         return Cs;
    }
    
-      public void resetGrades()
+   public void resetGrades()
    {
         Cs = 0;
+   }
+   public HashMap<String, Integer> getResults()
+   {
+        return results;
    }
     
 }
