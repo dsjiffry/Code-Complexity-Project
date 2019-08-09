@@ -5,6 +5,8 @@
  */
 package codecomplexity;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 public class MainFrame extends javax.swing.JFrame
@@ -171,7 +173,7 @@ public class MainFrame extends javax.swing.JFrame
             },
             new String []
             {
-                "Program Code", "Cs", "Ctc", "Cnc", "Ci", "TW", "Cps", "Cr"
+                "Program", "Cs", "Ctc", "Cnc", "Ci", "TW", "Cps", "Cr"
             }
         )
         {
@@ -253,9 +255,23 @@ public class MainFrame extends javax.swing.JFrame
         Thread thread = new Thread() {
              public void run() 
              {
-               CodeComplexity CC = new CodeComplexity(jFileChooser1.getSelectedFile().getAbsolutePath().toString(),codeType.getSelectedItem().toString());
-               codeType.setVisible(true);
-               jTextField1.setText("Project Type:");
+                CodeComplexity CC = new CodeComplexity(jFileChooser1.getSelectedFile().getAbsolutePath().toString(),codeType.getSelectedItem().toString());
+                codeType.setVisible(true);
+                jTextField1.setText("Project Type:");
+                //Emptying the table
+                DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
+                model.setRowCount(0);
+                HashMap<String, Integer> results = CC.getResults();
+
+                // passing line by line from text area
+                for (Map.Entry<String, Integer> result : results.entrySet())
+                {
+                        Object JFill[] = {result.getKey(),result.getValue()};
+                        model.addRow(JFill);
+                        CC.resetGrades(); 
+                        
+                        jTabbedPane1.setSelectedIndex(2);
+                }
              }  
          };
         thread.setDaemon(true);
