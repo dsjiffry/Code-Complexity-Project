@@ -300,7 +300,7 @@ public class CodeComplexity
        //Detect >
        total = total + ((line.length() - line.replaceAll("\\>(?!=)", "").length())/2);
        //Detect <
-       total = total + ((line.length() - line.replaceAll("((?<!<)<(?![=<>])", "").length()));
+       //total = total + ((line.length() - line.replaceAll("\\<(?!=)", "").length())); //Error: count <<= as 1
        //Detect >=
        total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])>=(?![&=])", "").length())/2);
        //Detect <=
@@ -320,9 +320,9 @@ public class CodeComplexity
             \*(?!=)                             '*' not followed by a '='
             (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters { =\+\-\*!/><%&^|' } or followed by '='
             (?<!>)>>=                           '>>=' not preceded by '>'
-            (?<!<)<(?![=<>])                    '<' not preceded by '<' or folloed by characters { =<> }
         
    */
+   
    
    
    
