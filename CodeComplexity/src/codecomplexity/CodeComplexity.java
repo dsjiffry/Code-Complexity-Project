@@ -266,19 +266,19 @@ public class CodeComplexity
        int total = 0;
        
        //Detect +
-       total = total + ((line.length() - line.replaceAll("\\+", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[+](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect -
-       total = total + ((line.length() - line.replaceAll("\\-", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[-](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect *
-       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])*(?!=)", "").length())); //Error
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[*](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect /
-       total = total + ((line.length() - line.replaceAll("/(?!=)", "").length()));
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[/](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect %
-       //total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])%(?!=)", "").length())); // Error - count %% as 1
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[%](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect ++
-       total = total + ((line.length() - line.replaceAll("\\++", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\\++(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect --
-       total = total + ((line.length() - line.replaceAll("\\--", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\\--(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
 
 
        return total;
@@ -294,29 +294,17 @@ public class CodeComplexity
        int total = 0;
         
        //Detect ==
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)==(?!\\W)", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" ==(?!\\W)|(?<!\\W)== ", "").length())/3);
-       total = total + ((line.length() - line.replaceAll(" == ", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])==(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect !=
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)!=(?!\\W)", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" !=(?!\\W)|(?<!\\W)!= ", "").length())/3);
-       total = total + ((line.length() - line.replaceAll(" != ", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])!=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect >
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)>(?!\\W)", "").length()));
-       total = total + ((line.length() - line.replaceAll(" >(?!\\W)|(?<!\\W)> ", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" > ", "").length())/3);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect <
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)<(?!\\W)", "").length()));
-       total = total + ((line.length() - line.replaceAll(" <(?!\\W)|(?<!\\W)< ", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" < ", "").length())/3);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect >=
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)>=(?!\\W)", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" >=(?!\\W)|(?<!\\W)>= ", "").length())/3);
-       total = total + ((line.length() - line.replaceAll(" >= ", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect <=
-       total = total + ((line.length() - line.replaceAll("(?<!\\W)<=(?!\\W)", "").length())/2);
-       total = total + ((line.length() - line.replaceAll(" <=(?!\\W)|(?<!\\W)<= ", "").length())/3);
-       total = total + ((line.length() - line.replaceAll(" <= ", "").length())/4);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
 
        return total;
    }
