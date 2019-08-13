@@ -17,6 +17,7 @@ public class TestSuite
         testLogicalOperators();
         testAssignmentOperators();
         testManipulators();
+        testBitwise();
     }
     
     
@@ -76,6 +77,21 @@ public class TestSuite
         
         assertCheck(testing.manipulators(testInput) == 4);
         System.out.println("Manipulators Test Successful");
+    }
+    
+    public void testBitwise()
+    {
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i | 10;\n" +
+                            "cout ~ 5;\n" +
+                            "cin << 2;\n" +
+                            "cout >> 5;\n" +
+                            "cin <<< 2;\n" +
+                            "cin >>> 2;\n"    ;
+        
+        System.out.println(testing.bitwiseOperators(testInput));
+        assertCheck(testing.bitwiseOperators(testInput) == 6);
+        System.out.println("Bitwise Test Successful");
     }
     
     
