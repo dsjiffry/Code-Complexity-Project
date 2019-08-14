@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class CodeComplexity
@@ -331,6 +334,28 @@ public class CodeComplexity
        total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>>>(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/3);
 
        
+       return total;
+   }
+   
+   protected int keywords(String line){
+       
+       int total = 0;
+       
+       //List of Keywords
+       ArrayList<String> keyList = new ArrayList<>();
+       Collections.addAll(keyList, "assert", "boolean", "break", "byte", "case", "catch",
+               "char", "class", "continue", "default", "do", "double", "enum", "extends", "final", "finally", 
+               "float", "for", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
+               "null", "package", "private", "protected", "short", "strictfp", "super", "switch", 
+               "synchronized", "this", "transient", "void", "volatile", "while");
+       
+       Iterator<String> itr = keyList.iterator();
+       
+       while (itr.hasNext()) { 
+           String kw = itr.next();
+           total = total + ((line.length() - line.replaceAll(kw, "").length()) / kw.length());
+       }
+              
        return total;
    }
    

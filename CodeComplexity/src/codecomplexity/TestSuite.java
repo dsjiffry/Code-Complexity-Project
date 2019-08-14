@@ -18,6 +18,7 @@ public class TestSuite
         testAssignmentOperators();
         testManipulators();
         testBitwise();
+        testKeywords();
     }
     
     
@@ -89,11 +90,23 @@ public class TestSuite
                             "cin <<< 2;\n" +
                             "cin >>> 2;\n"    ;
         
-        System.out.println(testing.bitwiseOperators(testInput));
         assertCheck(testing.bitwiseOperators(testInput) == 6);
         System.out.println("Bitwise Test Successful");
     }
     
+    public void testKeywords(){
+         CodeComplexity testing = new CodeComplexity();
+        String testInput =  "public void setBooks();\n" +
+                            "assert(setBooks())\n" + 
+                            "enum\n" + 
+                            "continue:\n" +
+                            "transient\n"
+                            ;
+        
+        System.out.println(testing.keywords(testInput));
+        assertCheck(testing.keywords(testInput) == 5);
+        System.out.println("Keywords Test Successful");
+    }
     
     
     
