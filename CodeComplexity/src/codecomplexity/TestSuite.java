@@ -19,6 +19,7 @@ public class TestSuite
         testManipulators();
         testBitwise();
         testKeywords();
+        testStrings();
     }
     
     
@@ -103,9 +104,17 @@ public class TestSuite
                             "transient\n"
                             ;
         
-        System.out.println(testing.keywords(testInput));
         assertCheck(testing.keywords(testInput) == 5);
         System.out.println("Keywords Test Successful");
+    }
+    
+    public void testStrings(){
+         CodeComplexity testing = new CodeComplexity();
+        String testInput =  "System.out.println(\"Tis is a Strin\");\n" + 
+                            "String bookname = \"Twilight\";\n";
+        
+        assertCheck(testing.checkStrings(testInput) == 2);
+        System.out.println("Strings Test Successful");
     }
     
     

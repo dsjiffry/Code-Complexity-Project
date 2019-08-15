@@ -149,6 +149,9 @@ public class CodeComplexity
       Cs += relationalOperators(line);
       Cs += manipulators(line);
       Cs += bitwiseOperators(line);
+      Cs += keywords(line);
+      Cs += checkStrings(line);
+               
       
 
    }
@@ -358,6 +361,16 @@ public class CodeComplexity
               
        return total;
    }
+   
+   protected int checkStrings(String line){
+       
+       int total = 0;
+       
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\".*?(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
+       
+       return total;
+   }
+ 
    
    
    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
