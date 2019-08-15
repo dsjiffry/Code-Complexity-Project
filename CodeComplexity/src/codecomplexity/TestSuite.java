@@ -20,6 +20,8 @@ public class TestSuite
         testBitwise();
         testKeywords();
         testStrings();
+        testArithmaticOperators();
+        testRelationalOperators();
     }
     
     
@@ -117,8 +119,32 @@ public class TestSuite
         System.out.println("Strings Test Successful");
     }
     
+    public void testArithmaticOperators(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i + 5;\n" +
+                            "i - 5;\n" +
+                            "i * 5;\n" +
+                            "i / 5;\n" +
+                            "i % 10;\n" +
+                            "i++ ;\n" +
+                            "i-- ;\n" ;
+        
+        assertCheck(testing.arithmeticOperators(testInput) == 7);
+        System.out.println("Arithmatic Operators Test Successful");
+    }
     
-    
+    public void testRelationalOperators(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i == 5;\n" +
+                            "i != 5;\n" +
+                            "i > 5;\n" +
+                            "i < 5;\n" +
+                            "i <= 10;\n" +
+                            "i >= 10 ;\n" ;
+        
+        assertCheck(testing.relationalOperators(testInput) == 6);
+        System.out.println("Arithmatic Operators Test Successful");
+    }
     
     
     
