@@ -17,6 +17,11 @@ public class TestSuite
         testLogicalOperators();
         testAssignmentOperators();
         testManipulators();
+        testBitwise();
+        testKeywords();
+        testStrings();
+        testArithmaticOperators();
+        testRelationalOperators();
     }
     
     
@@ -78,9 +83,68 @@ public class TestSuite
         System.out.println("Manipulators Test Successful");
     }
     
+    public void testBitwise()
+    {
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i | 10;\n" +
+                            "cout ~ 5;\n" +
+                            "cin << 2;\n" +
+                            "cout >> 5;\n" +
+                            "cin <<< 2;\n" +
+                            "cin >>> 2;\n"    ;
+        
+        assertCheck(testing.bitwiseOperators(testInput) == 6);
+        System.out.println("Bitwise Test Successful");
+    }
     
+    public void testKeywords(){
+         CodeComplexity testing = new CodeComplexity();
+        String testInput =  "public void setBooks();\n" +
+                            "assert(setBooks())\n" + 
+                            "enum\n" + 
+                            "continue:\n" +
+                            "transient\n"
+                            ;
+        
+        assertCheck(testing.keywords(testInput) == 5);
+        System.out.println("Keywords Test Successful");
+    }
     
+    public void testStrings(){
+         CodeComplexity testing = new CodeComplexity();
+        String testInput =  "System.out.println(\"Tis is a Strin\");\n" + 
+                            "String bookname = \"Twilight\";\n";
+        
+        assertCheck(testing.checkStrings(testInput) == 2);
+        System.out.println("Strings Test Successful");
+    }
     
+    public void testArithmaticOperators(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i + 5;\n" +
+                            "i - 5;\n" +
+                            "i * 5;\n" +
+                            "i / 5;\n" +
+                            "i % 10;\n" +
+                            "i++ ;\n" +
+                            "i-- ;\n" ;
+        
+        assertCheck(testing.arithmeticOperators(testInput) == 7);
+        System.out.println("Arithmatic Operators Test Successful");
+    }
+    
+    public void testRelationalOperators(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "i == 5;\n" +
+                            "i != 5;\n" +
+                            "i > 5;\n" +
+                            "i < 5;\n" +
+                            "i <= 10;\n" +
+                            "i >= 10 ;\n" ;
+        
+        assertCheck(testing.relationalOperators(testInput) == 6);
+        System.out.println("Arithmatic Operators Test Successful");
+    }
     
     
     

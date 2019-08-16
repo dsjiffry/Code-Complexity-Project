@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class CodeComplexity
@@ -145,6 +148,11 @@ public class CodeComplexity
       Cs += arithmeticOperators(line);
       Cs += relationalOperators(line);
       Cs += manipulators(line);
+      Cs += bitwiseOperators(line);
+      Cs += keywords(line);
+      Cs += checkStrings(line);
+               
+      
 
    }
 
@@ -266,19 +274,19 @@ public class CodeComplexity
        int total = 0;
        
        //Detect +
-       total = total + ((line.length() - line.replaceAll("\\+", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[+](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect -
-       total = total + ((line.length() - line.replaceAll("\\-", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[-](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect *
-       total = total + ((line.length() - line.replaceAll("\\*(?!=)", "").length()));
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[*](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect /
-       total = total + ((line.length() - line.replaceAll("/(?!=)", "").length()));
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[/](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect %
-       total = total + ((line.length() - line.replaceAll("%(?!=)", "").length()));
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[%](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect ++
-       total = total + ((line.length() - line.replaceAll("\\++", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\\++(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect --
-       total = total + ((line.length() - line.replaceAll("\\--", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\\--(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
 
 
        return total;
@@ -292,22 +300,77 @@ public class CodeComplexity
    protected int relationalOperators(String line)
    {
        int total = 0;
-       
+        
        //Detect ==
-       total = total + ((line.length() - line.replaceAll("\\==", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])==(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect !=
-       total = total + ((line.length() - line.replaceAll("\\!=", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])!=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect >
-       total = total + ((line.length() - line.replaceAll("\\>(?!=)", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect <
-       //total = total + ((line.length() - line.replaceAll("\\<(?!=)", "").length())); //Error: count <<= as 1
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
        //Detect >=
-       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])>=(?![&=])", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
        //Detect <=
-       total = total + ((line.length() - line.replaceAll("(?<![=\\+\\-\\*/!><%&^|])<=(?![&=])", "").length())/2);
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<=(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
 
        return total;
    }
+   
+   protected int bitwiseOperators(String line){
+       
+       int total = 0;
+       
+       //Detect |
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[|](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
+       //Detect ^ Does not work needs to be fixed
+       //total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])^(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
+       //Detect ~
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])[~](?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
+       //Detect <<
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<<(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
+       //Detect >>
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>>(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
+       //Detect <<<
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])<<<(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/3);
+       //Detect >>>
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])>>>(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/3);
+
+       
+       return total;
+   }
+   
+   protected int keywords(String line){
+       
+       int total = 0;
+       
+       //List of Keywords
+       ArrayList<String> keyList = new ArrayList<>();
+       Collections.addAll(keyList, "assert", "boolean", "break", "byte", "case", "catch",
+               "char", "class", "continue", "default", "do", "double", "enum", "extends", "final", "finally", 
+               "float", "for", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
+               "null", "package", "private", "protected", "short", "strictfp", "super", "switch", 
+               "synchronized", "this", "transient", "void", "volatile", "while");
+       
+       Iterator<String> itr = keyList.iterator();
+       
+       while (itr.hasNext()) { 
+           String kw = itr.next();
+           total = total + ((line.length() - line.replaceAll(kw, "").length()) / kw.length());
+       }
+              
+       return total;
+   }
+   
+   protected int checkStrings(String line){
+       
+       int total = 0;
+       
+       total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\".*?(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())/2);
+       
+       return total;
+   }
+ 
    
    
    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
