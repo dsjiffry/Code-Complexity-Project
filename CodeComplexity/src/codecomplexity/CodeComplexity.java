@@ -12,8 +12,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+
 
 public class CodeComplexity
 {
@@ -23,6 +27,9 @@ public class CodeComplexity
    public boolean isloop = false;
    public boolean isJava = false;
    public HashMap<String, Integer> results = new HashMap<>(); 
+   
+   /*HashSet used to identify if a word is a keyword in */
+   private HashSet<String> keyWordSet = new HashSet<String>();
 
    public CodeComplexity(){}
     
@@ -373,6 +380,101 @@ public class CodeComplexity
        
        return total;
    }
+   
+   
+
+	public int Numbers(String line,int programType) {
+		int numberCount = 0;
+		String character = " ";
+		// add a non variable value in-case first character is a number
+		line = "#" + line;
+		/*Get character value and remove it form line String*/
+		character = String.valueOf(line.charAt(0));
+		line = line.substring(1);
+		
+		//Loop to access iterate through line ends when line is empty.
+		while(!line.isEmpty()) {
+			//is character NOT the start of a identifier.
+			if(!Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType],character)) {
+				/*Get character value and remove it form line String*/
+				character = String.valueOf(line.charAt(0));
+				line = line.substring(1);
+				//is character a number.
+				if(Pattern.matches("[0-9.]",character)){
+					//loop to find end of number.
+					while(Pattern.matches("[0-9.]",character)) {
+						
+						//end loop if line is empty
+						if(line.isEmpty()) {
+							break;
+						}
+						/*Get character value and remove it form line String*/
+						character = String.valueOf(line.charAt(0));
+						line = line.substring(1);	
+					}
+					numberCount++;
+					
+					//end loop if line is empty
+					if(line.isEmpty())
+						break;				
+					
+				}
+			}else{
+				/*Get character value and remove it form line String*/
+				character = String.valueOf(line.charAt(0));
+				line = line.substring(1);
+			}
+			
+			
+		}
+		int count = numberCount;
+		return count;
+	}
+	
+	public int identifiers(String line,int programType) {
+		String character = " "; 	//holds Temporary character value used with regex statement.
+		int namesCount = 0;  		//counter increased when an identifiers.
+		String word = ""; 			//word String hold an word value used to identify keywords.
+		initKeyWordSet(programType); //fill keyWordSet with keyword of given program type. 
+		//Loop to access iterate through line ends when line is empty.
+		while(!line.isEmpty()) {
+			
+			/*Get character value and remove it form line String*/
+			line.trim();
+			character = String.valueOf(line.charAt(0));
+			line = line.substring(1);
+			 /*is character the start of a identifier*/
+			 if(Pattern.matches(CodeSizeConstrants.VARIABLE_START_WITH[programType],character)){
+	
+				word =  word + character;//add character to word
+				
+				/*Get character value and remove it form line String*/
+				character = String.valueOf(line.charAt(0));
+				line = line.substring(1);
+				
+				/*loop that check if the next character is part of 
+				* the identifier and then adds to word */
+				while(Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType],character)) {
+						
+					word =  word + character;//add character to word
+					/*Get character value and remove it form line String*/
+					character = String.valueOf(line.charAt(0));
+					line = line.substring(1);
+				}
+				
+				//If word is keyword reset word.
+				if(keyWordSet.contains(word)) {
+					word="";//Reset word value to empty. 
+				}else {
+					/*If word is not a keyword 
+					reset word and increase namesCount.*/
+					namesCount++;
+					word="";	
+				}
+			 }
+		 }
+		 return namesCount;
+	}
  
    
    
@@ -415,5 +517,12 @@ public class CodeComplexity
    {
         return results;
    }
+   
+   /*this method initializes the keyWordSet HashSet with values 
+	 * of keywordList array*/
+	private void initKeyWordSet(int programType) {
+		for(String key : CodeSizeConstrants.KEY_WORD_LIST[programType])
+			keyWordSet.add(key);
+	}
     
 }

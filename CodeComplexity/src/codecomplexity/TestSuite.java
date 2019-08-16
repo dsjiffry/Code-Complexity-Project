@@ -22,6 +22,8 @@ public class TestSuite
         testStrings();
         testArithmaticOperators();
         testRelationalOperators();
+        testIdentifiers();
+        testNumbers();
     }
     
     
@@ -145,6 +147,37 @@ public class TestSuite
         assertCheck(testing.relationalOperators(testInput) == 6);
         System.out.println("Arithmatic Operators Test Successful");
     }
+    
+    
+    public void testNumbers(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "public int add() {\n"
+        		+ "2+3=5;\n"
+        		+ "4*5=20;\n"
+        		+ "and20Puls30 = 50;\n"
+        		+ "}";
+        
+        assertCheck(testing.Numbers(testInput, CodeSizeConstrants.PROGRAM_TYPE_JAVA) == 7);
+        System.out.println("Find Numbers Test Successful");
+    }
+    
+    public void testIdentifiers(){
+        CodeComplexity testing = new CodeComplexity();
+        String testInput =  "public class AddTwoNumbers {\r\n" + 
+        		"\r\n" + 
+        		"			   public static void main(String[] args) {\r\n" + 
+        		"			        \r\n" + 
+        		"			      int num1 = 5, num2 = 15, sum;\r\n" + 
+        		"			      sum = num1 + num2;\r\n" + 
+        		"\r\n" + 
+        		"			      System.out.println(sum);\r\n" + 
+        		"			   }\r\n" + 
+        		"			};  " ;
+        
+        assertCheck(testing.identifiers(testInput, CodeSizeConstrants.PROGRAM_TYPE_JAVA) == 14);
+        System.out.println("Find identifiers Test Successful");
+    }
+    
     
     
     
