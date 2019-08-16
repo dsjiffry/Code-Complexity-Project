@@ -46,11 +46,7 @@ public class CodeSizeConstrants {
 	 *  */
 	public static final String[] VARIABLE_CHAR = {"[A-Za-z_$0-9]","[A-Za-z_0-9]","[A-Za-z_0-9]"};
 	
-	/*index values for program type. index 0 is for JAVA 
-	 * and index 1 is for C++/C */
-	public static final int PROGRAM_TYPE_JAVA =0;
-	public static final int PROGRAM_TYPE_C = 1;
-	public static final int PROGRAM_TYPE_CPP = 2;
+
 	
 	
 	

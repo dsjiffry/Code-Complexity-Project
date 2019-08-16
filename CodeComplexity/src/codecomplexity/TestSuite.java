@@ -163,6 +163,7 @@ public class TestSuite
     
     public void testIdentifiers(){
         CodeComplexity testing = new CodeComplexity();
+        testing.isJava = true;
         String testInput =  "public class AddTwoNumbers {\r\n" + 
         		"\r\n" + 
         		"			   public static void main(String[] args) {\r\n" + 

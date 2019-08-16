@@ -383,7 +383,8 @@ public class CodeComplexity
    
    
 
-	public int Numbers(String line,int programType) {
+	public int Numbers(String line) {
+		int programType = (isJava)?0:2;//set program type 0 for java and, 2 for C++.
 		int numberCount = 0;
 		String character = " ";
 		// add a non variable value in-case first character is a number
@@ -431,7 +432,8 @@ public class CodeComplexity
 		return count;
 	}
 	
-	public int identifiers(String line,int programType) {
+	public int identifiers(String line) {
+		int programType = (isJava)?0:2;//set program type 0 for java and, 2 for C++.
 		String character = " "; 	//holds Temporary character value used with regex statement.
 		int namesCount = 0;  		//counter increased when an identifiers.
 		String word = ""; 			//word String hold an word value used to identify keywords.
