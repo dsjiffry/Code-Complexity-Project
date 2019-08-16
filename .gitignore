@@ -1,4 +1,6 @@
 *.class
+private.xml
+private.properties
 
 # Built application files
 /*/build/
