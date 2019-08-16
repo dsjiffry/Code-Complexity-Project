@@ -145,7 +145,7 @@ public class TestSuite
                             "i >= 10 ;\n" ;
         
         assertCheck(testing.relationalOperators(testInput) == 6);
-        System.out.println("Arithmatic Operators Test Successful");
+        System.out.println("Relational Operators Test Successful");
     }
     
     
