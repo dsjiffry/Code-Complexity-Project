@@ -158,7 +158,7 @@ public class TestSuite
         		+ "and20Puls30 = 50;\n"
         		+ "}";
         
-        //assertCheck(testing.Numbers(testInput, CodeSizeConstrants.PROGRAM_TYPE_JAVA) == 7);
+        assertCheck(testing.Numbers(testInput) == 7);
         System.out.println("Find Numbers Test Successful");
     }
     
@@ -176,7 +176,7 @@ public class TestSuite
         		"			   }\r\n" + 
         		"			};  " ;
         
-        //assertCheck(testing.identifiers(testInput, CodeSizeConstrants.PROGRAM_TYPE_JAVA) == 14);
+        assertCheck(testing.identifiers(testInput) == 14);
         System.out.println("Find identifiers Test Successful");
     }
     
