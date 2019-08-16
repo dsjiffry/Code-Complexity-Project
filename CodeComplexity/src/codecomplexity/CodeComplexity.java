@@ -137,7 +137,10 @@ public class CodeComplexity
        }
        if(line.contains("\""))
        {
-           // TODO Identify and grade strings
+           // Checking strings and then removing them.
+           Cs += checkStrings(line);
+           int begin = line.indexOf("\"");
+           line = line.substring(0,begin);
        }
 
 
@@ -150,7 +153,7 @@ public class CodeComplexity
       Cs += manipulators(line);
       Cs += bitwiseOperators(line);
       Cs += keywords(line);
-      Cs += checkStrings(line);
+      
                
       
 
@@ -389,15 +392,7 @@ public class CodeComplexity
    
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
+  
    /**
    * Used for directly passing code instead of directories
    * @param line The line of code to grade
