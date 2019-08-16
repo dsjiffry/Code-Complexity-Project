@@ -225,8 +225,8 @@ public class MainFrame extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(47, 47, 47)
-                .addComponent(CsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(279, 279, 279))
+                .addComponent(CsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(273, 273, 273))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,7 +287,14 @@ public class MainFrame extends javax.swing.JFrame
                         CC.resetGrades(); 
                         
                         jTabbedPane1.setSelectedIndex(2);
-                }
+                        //Getting total values of collumn
+                        int totalCS = 0;
+                        for(int i = 0;i<resultsTable.getModel().getRowCount();i++)
+                        {
+                            totalCS += Integer.valueOf(resultsTable.getModel().getValueAt(i,1).toString()); //get the all row values at column index 1
+                        }
+                        CsTotal.setText(String.valueOf(totalCS));
+                                }
              }  
          };
         thread.setDaemon(true);
@@ -310,9 +317,7 @@ public class MainFrame extends javax.swing.JFrame
                 jTextField1.setText("Loading.");
             }
         }
-                
-        
-        
+              
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void CancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelActionPerformed
@@ -346,6 +351,7 @@ public class MainFrame extends javax.swing.JFrame
             }   
         }
         
+        //Getting total values of collumn
         int totalCS = 0;
         for(int i = 0;i<resultsTable.getModel().getRowCount();i++)
         {
