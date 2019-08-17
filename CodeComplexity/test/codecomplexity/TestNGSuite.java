@@ -5,50 +5,48 @@
  */
 package codecomplexity;
 
-public class TestSuite
+import static org.testng.Assert.*;
+import org.testng.annotations.Test;
+
+/**
+ *
+ * @author Shehan
+ */
+public class TestNGSuite
 {
-    public TestSuite()
+    private CodeComplexity testing;
+
+    public TestNGSuite()
     {
-        testMiscellaneousOperators();
-        testLogicalOperators();
-        testAssignmentOperators();
-        testManipulators();
-        testBitwise();
-        testKeywords();
-        testStrings();
-        testArithmaticOperators();
-        testRelationalOperators();
-        testIdentifiers();
-        testNumbers();
+        testing = new CodeComplexity();
     }
     
     
+    
+    @Test
     public void testMiscellaneousOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i->10 - >;" +
                             "i::5 : :;" +
                             "i.2;" +
                             "i,5;";
         
-        assertCheck(testing.miscellaneousOperators(testInput) == 4);
-        System.out.println("Miscellaneous Operator Test Successful");
+        assertEquals(testing.miscellaneousOperators(testInput), 4);
     }
     
+    @Test
     public void testLogicalOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i&&10 & &=" +
                             "i||5 | |=" +
                             "!true i!=5";
         
-        assertCheck(testing.logicalOperators(testInput) ==  3);
-        System.out.println("Logical Operator Test Successful");
+        assertEquals(testing.logicalOperators(testInput), 3);
     }
     
+    @Test
     public void testAssignmentOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i += 10;\n" +
                             "i -= 5;\n" +
                             "i *= 2;\n" +
@@ -63,63 +61,58 @@ public class TestSuite
                             "i >>=34;\n" +
                             "i^=9;";
         
-        assertCheck(testing.assignmentOperators(testInput) == 12);
-        System.out.println("Assignment Operator Test Successful");
+        assertEquals(testing.assignmentOperators(testInput), 12);
     }
     
 
+    @Test
     public void testManipulators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i += 10;\n" +
                             "cout<< 5;\n" +
                             "cin>> 2;\n" +
                             "cout << 5;\n" +
                             "cin >> 2;\n";
-        
-        assertCheck(testing.manipulators(testInput) == 4);
-        System.out.println("Manipulators Test Successful");
+        testing.isJava = false;
+        assertEquals(testing.manipulators(testInput), 4);
     }
     
+    @Test
     public void testBitwise()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i | 10;\n" +
                             "cout ~ 5;\n" +
                             "cin << 2;\n" +
                             "cin ^ 2;\n" +
                             "cout >> 5;\n" +
                             "cin <<< 2;\n" +
-                            "cin >>> 2;\n"    ;
+                            "cin >>> 2;\n";
         
-        assertCheck(testing.bitwiseOperators(testInput) == 7);
-        System.out.println("Bitwise Test Successful");
+        assertEquals(testing.bitwiseOperators(testInput), 7);
     }
     
-    public void testKeywords(){
-        CodeComplexity testing = new CodeComplexity();
+    @Test
+    public void testKeywords()
+    {
         String testInput =  "public void setBooks();\n" +
                             "assert(setBooks())\n" + 
                             "enum\n" + 
                             "continue:\n" +
                             "transient\n";
         
-        testing.isJava = true;
-        assertCheck(testing.keywords(testInput) == 5);
-        System.out.println("Keywords Test Successful");
+        assertEquals(testing.keywords(testInput), 5);
     }
     
+    @Test
     public void testStrings(){
-         CodeComplexity testing = new CodeComplexity();
         String testInput =  "System.out.println(\"Tis is a Strin\");\n" + 
                             "String bookname = \"Twilight\";\n";
         
-        assertCheck(testing.checkStrings(testInput) == 2);
-        System.out.println("Strings Test Successful");
+        assertEquals(testing.checkStrings(testInput), 2);
     }
     
+    @Test
     public void testArithmaticOperators(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i + 5;\n" +
                             "i - 5;\n" +
                             "i * 5;\n" +
@@ -128,12 +121,11 @@ public class TestSuite
                             "i++ ;\n" +
                             "i-- ;\n" ;
         
-        assertCheck(testing.arithmeticOperators(testInput) == 7);
-        System.out.println("Arithmatic Operators Test Successful");
+        assertEquals(testing.arithmeticOperators(testInput), 7);
     }
     
+    @Test
     public void testRelationalOperators(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i == 5;\n" +
                             "i != 5;\n" +
                             "i > 5;\n" +
@@ -141,25 +133,22 @@ public class TestSuite
                             "i <= 10;\n" +
                             "i >= 10 ;\n" ;
         
-        assertCheck(testing.relationalOperators(testInput) == 6);
-        System.out.println("Relational Operators Test Successful");
+        assertEquals(testing.relationalOperators(testInput), 6);
     }
     
-    
+    @Test
     public void testNumbers(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "public int add() {\n"
         		+ "2+3=5;\n"
         		+ "4*5=20;\n"
         		+ "and20Puls30 = 50;\n"
         		+ "}";
         
-        assertCheck(testing.Numbers(testInput) == 7);
-        System.out.println("Find Numbers Test Successful");
+        assertEquals(testing.Numbers(testInput), 7);
     }
     
+    @Test
     public void testIdentifiers(){
-        CodeComplexity testing = new CodeComplexity();
         testing.isJava = true;
         String testInput =  "public class AddTwoNumbers {\r\n" + 
         		"\r\n" + 
@@ -172,39 +161,7 @@ public class TestSuite
         		"			   }\r\n" + 
         		"			};  " ;
         
-        assertCheck(testing.identifiers(testInput) == 14);
-        System.out.println("Find identifiers Test Successful");
-    }
-    
-    
-    
-    
-    
-    
-    
-    //*******************************************************************************************************************************
-    // Methods
-    
-    /**
-     * To avoid passing -ea in VM arguments
-    */
-    public void assertCheck(boolean bool)
-    {
-        if(!bool)
-        {
-            //Getting the calling methods name from stacktrace
-            StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-            StackTraceElement e = stacktrace[2];
-            String methodName = e.getMethodName();
-            
-            
-            System.err.println("Assertion Fail in "+methodName);
-            System.exit(-1);
-        }
-    }
-    
-    public static void main(String[] args)
-    {
-        new TestSuite();
-    }
+        assertEquals(testing.identifiers(testInput), 14);
+    }  
+
 }
