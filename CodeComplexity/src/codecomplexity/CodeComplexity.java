@@ -160,7 +160,6 @@ public class CodeComplexity
       Cs += manipulators(line);
       Cs += bitwiseOperators(line);
       Cs += keywords(line);
-      
                
       
 
