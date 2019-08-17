@@ -99,10 +99,11 @@ public final class TestSuite
                             "assert(setBooks())\n" + 
                             "enum\n" + 
                             "continue:\n" +
-                            "transient\n";
+                            "transient\n"+
+                            "new;\n";
         
         testing.isJava = true;
-        assertCheck(testing.keywords(testInput) == 5);
+        assertCheck(testing.keywords(testInput) == 7);
         System.out.println("Keywords Test Successful");
     }
     

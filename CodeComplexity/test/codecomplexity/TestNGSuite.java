@@ -144,7 +144,7 @@ public class TestNGSuite
         		+ "and20Puls30 = 50;\n"
         		+ "}";
         
-        assertEquals(testing.Numbers(testInput), 7);
+        assertEquals(testing.numbers(testInput), 7);
     }
     
     @Test
