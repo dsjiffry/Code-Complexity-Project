@@ -5,10 +5,13 @@
  */
 package codecomplexity;
 
-public class TestSuite
+public final class TestSuite
 {
+    public CodeComplexity testing;
     public TestSuite()
     {
+        testing = new CodeComplexity();
+        
         testMiscellaneousOperators();
         testLogicalOperators();
         testAssignmentOperators();
@@ -25,7 +28,6 @@ public class TestSuite
     
     public void testMiscellaneousOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i->10 - >;" +
                             "i::5 : :;" +
                             "i.2;" +
@@ -37,7 +39,6 @@ public class TestSuite
     
     public void testLogicalOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i&&10 & &=" +
                             "i||5 | |=" +
                             "!true i!=5";
@@ -48,7 +49,6 @@ public class TestSuite
     
     public void testAssignmentOperators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i += 10;\n" +
                             "i -= 5;\n" +
                             "i *= 2;\n" +
@@ -70,7 +70,6 @@ public class TestSuite
 
     public void testManipulators()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i += 10;\n" +
                             "cout<< 5;\n" +
                             "cin>> 2;\n" +
@@ -83,7 +82,6 @@ public class TestSuite
     
     public void testBitwise()
     {
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i | 10;\n" +
                             "cout ~ 5;\n" +
                             "cin << 2;\n" +
@@ -97,7 +95,6 @@ public class TestSuite
     }
     
     public void testKeywords(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "public void setBooks();\n" +
                             "assert(setBooks())\n" + 
                             "enum\n" + 
@@ -110,7 +107,6 @@ public class TestSuite
     }
     
     public void testStrings(){
-         CodeComplexity testing = new CodeComplexity();
         String testInput =  "System.out.println(\"Tis is a Strin\");\n" + 
                             "String bookname = \"Twilight\";\n";
         
@@ -119,7 +115,6 @@ public class TestSuite
     }
     
     public void testArithmaticOperators(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i + 5;\n" +
                             "i - 5;\n" +
                             "i * 5;\n" +
@@ -133,7 +128,6 @@ public class TestSuite
     }
     
     public void testRelationalOperators(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "i == 5;\n" +
                             "i != 5;\n" +
                             "i > 5;\n" +
@@ -147,7 +141,6 @@ public class TestSuite
     
     
     public void testNumbers(){
-        CodeComplexity testing = new CodeComplexity();
         String testInput =  "public int add() {\n"
         		+ "2+3=5;\n"
         		+ "4*5=20;\n"
@@ -159,7 +152,6 @@ public class TestSuite
     }
     
     public void testIdentifiers(){
-        CodeComplexity testing = new CodeComplexity();
         testing.isJava = true;
         String testInput =  "public class AddTwoNumbers {\r\n" + 
         		"\r\n" + 
