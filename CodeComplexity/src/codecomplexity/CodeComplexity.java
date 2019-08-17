@@ -160,6 +160,8 @@ public class CodeComplexity
       Cs += manipulators(line);
       Cs += bitwiseOperators(line);
       Cs += keywords(line);
+      Cs += identifiers(line);
+      Cs += numbers(line);
                
       
 
@@ -404,7 +406,7 @@ public class CodeComplexity
    
    
 
-	public int Numbers(String line) {
+	public int numbers(String line) {
 		int programType = (isJava)?0:2;//set program type 0 for java and, 2 for C++.
 		int numberCount = 0;
 		String character = " ";

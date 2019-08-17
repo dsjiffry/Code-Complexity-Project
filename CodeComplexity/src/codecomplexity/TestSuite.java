@@ -147,7 +147,7 @@ public final class TestSuite
         		+ "and20Puls30 = 50;\n"
         		+ "}";
         
-        assertCheck(testing.Numbers(testInput) == 7);
+        assertCheck(testing.numbers(testInput) == 7);
         System.out.println("Find Numbers Test Successful");
     }
     
