@@ -163,7 +163,7 @@ public class CodeComplexity {
             // Multiply by 2 since each operator is awarded 2 marks
             //Detecting &
             total = total + ((line.length() - line.replaceAll("(?<!&)&(?![&=])", "").length())) * 2;
-            //Detecting .
+            //Detecting *
             total = total + ((line.length() - line.replaceAll("\\*(?!=)", "").length())) * 2;
         }
 
