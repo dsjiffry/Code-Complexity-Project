@@ -124,8 +124,16 @@ public class CodeComplexity {
         if (line.contains("\"")) {
             // Checking strings and then removing them.
             Cs += checkStrings(line);
-            int begin = line.indexOf("\"");
-            line = line.substring(0, begin);
+            while(line.contains("\""))
+            {
+                int begin = line.indexOf("\"");
+                String firstpart = line.substring(0, begin);
+                line = line.substring(begin+1, line.length());
+                int end = line.indexOf("\"");
+                String secondpart = line.substring(end+1, line.length());
+                line = firstpart + secondpart;
+                System.out.println(line);
+            }
         }
 
         //Calling All calculation methods
@@ -441,39 +449,43 @@ public class CodeComplexity {
         //Loop to access iterate through line ends when line is empty.
         while (!line.isEmpty()) {
 
-            /*Get character value and remove it form line String*/
-            line.trim();
-            character = String.valueOf(line.charAt(0));
-            line = line.substring(1);
-            /*is character the start of a identifier*/
-            if (Pattern.matches(CodeSizeConstrants.VARIABLE_START_WITH[programType], character)) {
-
-                word = word + character;//add character to word
-
+            try
+            {
                 /*Get character value and remove it form line String*/
+                line.trim();
                 character = String.valueOf(line.charAt(0));
                 line = line.substring(1);
-
-                /*loop that check if the next character is part of 
-				* the identifier and then adds to word */
-                while (Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType], character)) {
+                /*is character the start of a identifier*/
+                if (Pattern.matches(CodeSizeConstrants.VARIABLE_START_WITH[programType], character)) {
 
                     word = word + character;//add character to word
+
                     /*Get character value and remove it form line String*/
                     character = String.valueOf(line.charAt(0));
                     line = line.substring(1);
-                }
 
-                //If word is keyword reset word.
-                if (keyWordSet.contains(word)) {
-                    word = "";//Reset word value to empty. 
-                } else {
-                    /*If word is not a keyword 
-					reset word and increase namesCount.*/
-                    namesCount++;
-                    word = "";
+                    /*loop that check if the next character is part of 
+                                    * the identifier and then adds to word */
+                    while (Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType], character)) {
+
+                        word = word + character;//add character to word
+                        /*Get character value and remove it form line String*/
+                        character = String.valueOf(line.charAt(0));
+                        line = line.substring(1);
+                    }
+
+                    //If word is keyword reset word.
+                    if (keyWordSet.contains(word)) {
+                        word = "";//Reset word value to empty. 
+                    } else {
+                        /*If word is not a keyword 
+                                            reset word and increase namesCount.*/
+                        namesCount++;
+                        word = "";
+                    }
                 }
-            }
+            }catch(StringIndexOutOfBoundsException ignored)
+            {}
         }
         return namesCount;
     }
