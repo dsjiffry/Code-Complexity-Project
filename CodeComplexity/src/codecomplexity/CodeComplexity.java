@@ -408,7 +408,7 @@ public class CodeComplexity {
                 character = String.valueOf(line.charAt(0));
                 line = line.substring(1);
                 //is character a number.
-                if (Pattern.matches("[0-9.]", character)) {
+                if (Pattern.matches("[0-9]", character)) {
                     //loop to find end of number.
                     while (Pattern.matches("[0-9.]", character)) {
 
