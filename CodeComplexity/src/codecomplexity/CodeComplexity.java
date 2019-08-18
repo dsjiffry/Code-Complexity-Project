@@ -385,7 +385,7 @@ public class CodeComplexity {
 
         int total = 0;
 
-        total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])\".*?(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()) / 2);
+        total = total + ((line.length() - line.replaceAll("\".*?", "").length()) / 2);
 
         return total;
     }
