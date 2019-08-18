@@ -369,7 +369,7 @@ public class CodeComplexity {
         }
 
         ArrayList<String> spkeyList = new ArrayList<>();
-        Collections.addAll(spkeyList, "new", "delete", "throw", "throws");
+        Collections.addAll(spkeyList, "new", "delete", "throw ", "throws" );
 
         Iterator<String> itr = spkeyList.iterator();
 
