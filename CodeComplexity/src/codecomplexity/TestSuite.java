@@ -100,7 +100,8 @@ public final class TestSuite
                             "enum\n" + 
                             "continue:\n" +
                             "transient\n"+
-                            "new;\n";
+                            "new;\n"+
+                            "println\n";
         
         testing.isJava = true;
         assertCheck(testing.keywords(testInput) == 7);

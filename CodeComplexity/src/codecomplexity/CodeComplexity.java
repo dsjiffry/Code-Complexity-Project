@@ -337,7 +337,7 @@ public class CodeComplexity {
             ArrayList<String> jkeyList = new ArrayList<>();
             Collections.addAll(jkeyList, "assert", "boolean", "break", "byte", "case", "catch",
                     "char", "class", "continue", "default", "do", "double", "enum", "extends", "final", "finally",
-                    "float", "for", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
+                    "float", "for", "if", "implements", "import", "instanceof", " int ", "interface", "long", "native",
                     "null", "package", "private", "protected", "short", "strictfp", "super", "switch",
                     "synchronized", "this", "transient", "void", "volatile", "while");
 
@@ -465,13 +465,13 @@ public class CodeComplexity {
 
                     /*loop that check if the next character is part of 
                                     * the identifier and then adds to word */
-                    while (Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType], character)) {
+                    do{
 
                         word = word + character;//add character to word
                         /*Get character value and remove it form line String*/
                         character = String.valueOf(line.charAt(0));
                         line = line.substring(1);
-                    }
+                    }while (Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType], character));
 
                     //If word is keyword reset word.
                     if (keyWordSet.contains(word)) {
