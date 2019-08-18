@@ -132,7 +132,6 @@ public class CodeComplexity {
                 int end = line.indexOf("\"");
                 String secondpart = line.substring(end+1, line.length());
                 line = firstpart + secondpart;
-                System.out.println(line);
             }
         }
 
