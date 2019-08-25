@@ -316,7 +316,7 @@ public class MainFrame extends javax.swing.JFrame
                 {
                         Object JFill[] = {result.getKey(),result.getValue()};
                         model.addRow(JFill);
-                        CC.resetGrades(); 
+                        CC.resetAllGrades(); 
                         
                         jTabbedPane1.setSelectedIndex(2);
                         //Getting total values of collumn
@@ -384,9 +384,9 @@ public class MainFrame extends javax.swing.JFrame
             if(!line.trim().isEmpty())
             {
                 CC.codeOnly(line);
-                Object JFill[] = {line,CC.getGrades()};
+                Object JFill[] = {line,CC.getCs(),CC.getCtc()};
                 model.addRow(JFill);
-                CC.resetGrades(); 
+                CC.resetAllGrades(); 
                 
                 jTabbedPane1.setSelectedIndex(2);
             }   

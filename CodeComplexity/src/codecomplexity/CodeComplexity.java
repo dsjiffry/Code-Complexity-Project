@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 public class CodeComplexity {
 
     public int Cs = 0;
+    public int Ctc = 0;
     public boolean isComment = false;
     public int braces = 0;
     public boolean isloop = false;
@@ -146,6 +147,8 @@ public class CodeComplexity {
         Cs += keywords(line);
         Cs += identifiers(line);
         Cs += numbers(line);
+        
+        Ctc += conditionalControlStructure(line);
 
     }
 
@@ -491,8 +494,36 @@ public class CodeComplexity {
         }
         return namesCount;
     }
+    
+    
+//****************************************************************************************************************************
+//--------------------------------------------------------- Sprint 2 ---------------------------------------------------------
+//**************************************************************************************************************************** 
+    
+    
+    public int conditionalControlStructure(String line)
+    {
+        int total = 0;
+        
+        total = total + ((line.length() - line.replaceAll("(?<!\\w)if(?!\\w)", "").length()) / 2);
+        if(total > 0)  // 'if' detected
+        {            
+            //Detecting &&
+            total = total + ((line.length() - line.replaceAll("&&", "").length()) / 2);
+            //Detecting &
+            total = total + ((line.length() - line.replaceAll("(?<!&)&(?![&=])", "").length()));
+            //Detecting ||
+            total = total + ((line.length() - line.replaceAll("\\|\\|", "").length()) / 2);
+            //Detecting |
+            total = total + ((line.length() - line.replaceAll("(?<!\\|)\\|(?!\\|)", "").length()));
+        }      
+        return total;
+    }
+    
+    
+    
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
         Regex Expressions Explained:
             !(?!=)                              '!' not followed by '='
@@ -511,12 +542,17 @@ public class CodeComplexity {
         forEveryLine(line);
     }
 
-    public int getGrades() {
+    public int getCs() {
         return Cs;
     }
+    
+    public int getCtc() {
+        return Ctc;
+    }
 
-    public void resetGrades() {
+    public void resetAllGrades() {
         Cs = 0;
+        Ctc = 0;
     }
 
     public HashMap<String, Integer> getResults() {
