@@ -21,10 +21,11 @@ public class CodeComplexity {
 
     public int Cs = 0;
     public int Ctc = 0;
-    public boolean isComment = false;
-    public int braces = 0;
-    public boolean isloop = false;
-    public boolean isJava = false;
+    public int Cnc = 0;
+    public boolean isComment = false;   //will be true if we are inside a multi-line comment
+    public int braces = 1;              //will be incremented for each opening brace and decremented for each closing brace
+    public boolean isJava = false;      //will be true if code sample is in java
+    public boolean nestedblock = false;
     public HashMap<String, Integer> results = new HashMap<>();
 
     /*HashSet used to identify if a word is a keyword in */
@@ -149,6 +150,8 @@ public class CodeComplexity {
         Cs += numbers(line);
         
         Ctc += conditionalControlStructure(line);
+        
+        Cnc += nestingControlStructure(line);
 
     }
 
@@ -520,6 +523,34 @@ public class CodeComplexity {
         return total;
     }
     
+    public int nestingControlStructure(String line)
+    {
+        int total = 0;
+        // Detecting for,while or do-while loops
+        total = total + ((line.length() - line.replaceAll("\\bfor\\b", "").length()) / 3)*braces;
+        total = total + ((line.length() - line.replaceAll("\\bwhile\\b", "").length()) / 5)*braces;
+        total = total + ((line.length() - line.replaceAll("\\bdo\\b", "").length()) / 2)*braces;
+        total = total + ((line.length() - line.replaceAll("\\bif\\b", "").length()) / 2)*braces;
+        
+        if(total >0 || nestedblock)
+        {
+            nestedblock = true;
+            if(line.contains("{"))
+            {
+                braces++;
+            }
+            if(line.contains("}"))
+            {
+                braces--;
+            }
+        }
+        else if(braces == 1)
+        {
+            nestedblock = false;
+        }
+        
+        return total;
+    }
     
     
 
@@ -531,7 +562,7 @@ public class CodeComplexity {
             \*(?!=)                             '*' not followed by a '='
             (?<![=\+\-\!/*><%&^|])=(?![&=])     '=' not preceded by characters { =\+\-\*!/><%&^|' } or followed by '='
             (?<!>)>>=                           '>>=' not preceded by '>'
-        
+            \\bfor\\b                           '\b' are work boundaries to ensure that strings are matched as complete words and not substrings of other words
      */
     /**
      * Used for directly passing code instead of directories
@@ -549,10 +580,16 @@ public class CodeComplexity {
     public int getCtc() {
         return Ctc;
     }
+    
+    public int getCnc()
+    {
+        return Cnc;
+    }
 
     public void resetAllGrades() {
         Cs = 0;
         Ctc = 0;
+        Cnc = 0;
     }
 
     public HashMap<String, Integer> getResults() {
