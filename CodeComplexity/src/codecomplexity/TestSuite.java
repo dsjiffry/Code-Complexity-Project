@@ -5,6 +5,8 @@
  */
 package codecomplexity;
 
+import javax.swing.SpringLayout;
+
 public final class TestSuite
 {
     public CodeComplexity testing;
@@ -26,6 +28,7 @@ public final class TestSuite
         
         //Sprint 2
         testConditionalControlStructure();
+        testnestingControlStructure();
     }
     
     
@@ -194,6 +197,14 @@ public final class TestSuite
         System.out.println("Conditional Control Structure Test Successful");
     }
     
+    public void testnestingControlStructure()
+    {
+        String testInput =  "while (x <= 4) \n" +
+                            "for (int x = 2; x <= 4; x++) \n" +
+                            "do" ;
+        assertCheck(testing.nestingControlStructure(testInput) == 3);   
+        System.out.println("Nesting Control Structure Test Successful");
+    }
     
     
     

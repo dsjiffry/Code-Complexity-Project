@@ -384,7 +384,7 @@ public class MainFrame extends javax.swing.JFrame
             if(!line.trim().isEmpty())
             {
                 CC.codeOnly(line);
-                Object JFill[] = {line,CC.getCs(),CC.getCtc()};
+                Object JFill[] = {line,CC.getCs(),CC.getCtc(),CC.getCnc()};
                 model.addRow(JFill);
                 CC.resetAllGrades(); 
                 
