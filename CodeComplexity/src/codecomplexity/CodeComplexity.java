@@ -22,11 +22,17 @@ public class CodeComplexity {
     public int Cs = 0;
     public int Ctc = 0;
     public int Cnc = 0;
-    public boolean isComment = false;   //will be true if we are inside a multi-line comment
+    public int TW = 0;
+    public int Cps = 0;
+    public int Cr = 0;
+    public int Ci = 0;
+    public int Cp = 0;
     public int braces = 1;              //will be incremented for each opening brace and decremented for each closing brace
+    public boolean isComment = false;   //will be true if we are inside a multi-line comment
     public boolean isJava = false;      //will be true if code sample is in java
+    public boolean isRecursive = false;
     public boolean nestedblock = false;
-    public HashMap<String, Integer> results = new HashMap<>();
+    public HashMap<String, ArrayList<Integer>> results = new HashMap<>();
 
     /*HashSet used to identify if a word is a keyword in */
     private HashSet<String> keyWordSet = new HashSet<String>();
@@ -75,8 +81,18 @@ public class CodeComplexity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        doCalculations();
+        ArrayList<Integer> values = new ArrayList<>();
+        values.add(Cs);
+        values.add(Ctc);
+        values.add(Cnc);
+        values.add(Ci);
+        values.add(TW);
+        values.add(Cps);
+        values.add(Cr);
 
-        results.put(path.getFileName().toString(), Cs);
+        results.put(path.getFileName().toString(), values);
     }
 
     /**
@@ -152,7 +168,12 @@ public class CodeComplexity {
         Ctc += conditionalControlStructure(line);
         
         Cnc += nestingControlStructure(line);
-
+        
+        
+        
+        
+        
+        doCalculations();
     }
 
     //////////////////////////////////////////////// Identifing Operators  ////////////////////////////////////////////////
@@ -503,7 +524,11 @@ public class CodeComplexity {
 //--------------------------------------------------------- Sprint 2 ---------------------------------------------------------
 //**************************************************************************************************************************** 
     
-    
+    /**
+     * identify and grade conditional control structures the logical/bitwise operators within them
+     * @param line The code line to grade
+     * @return The obtained grade
+     */
     public int conditionalControlStructure(String line)
     {
         int total = 0;
@@ -529,7 +554,13 @@ public class CodeComplexity {
         // Detecting for,while or do-while loops
         total = total + ((line.length() - line.replaceAll("\\bfor\\b", "").length()) / 3)*braces;
         total = total + ((line.length() - line.replaceAll("\\bwhile\\b", "").length()) / 5)*braces;
-        total = total + ((line.length() - line.replaceAll("\\bdo\\b", "").length()) / 2)*braces;
+//        total = total + ((line.length() - line.replaceAll("\\bdo\\b", "").length()) / 2)*braces;  //Not needed becaues of 'while' at end?
+
+        if(total > 0)
+        {
+            isRecursive = true; //Needed to calculate Cp Value, Cp value changes if recursion is present
+        }
+        
         total = total + ((line.length() - line.replaceAll("\\bif\\b", "").length()) / 2)*braces;
         
         if(total >0 || nestedblock)
@@ -551,6 +582,25 @@ public class CodeComplexity {
         
         return total;
     }
+    
+    /**
+     * Calculating Ci, TW, Cps, Cr and Cp values
+     */
+    public void doCalculations()
+    {
+        TW = Ctc + Cnc + Ci; 
+        Cps = Cs * TW;
+        Cr = 2 * Cps;
+        if(isRecursive)
+        {
+            Cp = Cps + Cr;
+        }
+        else
+        {
+            Cp = Cps;
+        }
+    }
+    
     
     
 
@@ -585,14 +635,39 @@ public class CodeComplexity {
     {
         return Cnc;
     }
+    
+    public int getTW()
+    {
+        return TW;
+    }
+
+    public int getCps()
+    {
+        return Cps;
+    }
+
+    public int getCr()
+    {
+        return Cr;
+    }
+
+    public int getCi()
+    {
+        return Ci;
+    }
 
     public void resetAllGrades() {
         Cs = 0;
         Ctc = 0;
         Cnc = 0;
+        TW = 0;
+        Cps = 0;
+        Cr = 0;
+        Ci = 0;
+        Cp = 0;
     }
 
-    public HashMap<String, Integer> getResults() {
+    public HashMap<String, ArrayList<Integer>> getResults() {
         return results;
     }
 

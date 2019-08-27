@@ -5,6 +5,7 @@
  */
 package codecomplexity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +49,12 @@ public class MainFrame extends javax.swing.JFrame
         resultsTable = new javax.swing.JTable();
         CsTotal = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        CtcTotal = new javax.swing.JTextField();
+        CncTotal = new javax.swing.JTextField();
+        CiTotal = new javax.swing.JTextField();
+        TWTotal = new javax.swing.JTextField();
+        CpsTotal = new javax.swing.JTextField();
+        CrTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,6 +255,18 @@ public class MainFrame extends javax.swing.JFrame
 
         jLabel1.setText("Total:");
 
+        CtcTotal.setEditable(false);
+
+        CncTotal.setEditable(false);
+
+        CiTotal.setEditable(false);
+
+        TWTotal.setEditable(false);
+
+        CpsTotal.setEditable(false);
+
+        CrTotal.setEditable(false);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -256,9 +275,21 @@ public class MainFrame extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(47, 47, 47)
-                .addComponent(CsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(273, 273, 273))
+                .addGap(18, 18, 18)
+                .addComponent(CsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CtcTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CncTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CiTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TWTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CpsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CrTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +298,13 @@ public class MainFrame extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(CtcTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CncTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CiTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TWTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CpsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CrTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 35, Short.MAX_VALUE))
         );
 
@@ -309,24 +346,43 @@ public class MainFrame extends javax.swing.JFrame
                 //Emptying the table
                 DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
                 model.setRowCount(0);
-                HashMap<String, Integer> results = CC.getResults();
+                HashMap<String, ArrayList<Integer>> results = CC.getResults();
 
-                // passing line by line from text area
-                for (Map.Entry<String, Integer> result : results.entrySet())
+                
+                for (Map.Entry<String, ArrayList<Integer>> result : results.entrySet())
                 {
-                        Object JFill[] = {result.getKey(),result.getValue()};
+                        ArrayList<Integer> values = result.getValue();
+                        Object JFill[] = {result.getKey(),values.get(0),values.get(1),values.get(2),values.get(3),values.get(4),values.get(5),values.get(6)};
                         model.addRow(JFill);
                         CC.resetAllGrades(); 
                         
                         jTabbedPane1.setSelectedIndex(2);
                         //Getting total values of collumn
                         int totalCS = 0;
+                        int totalCtc = 0;
+                        int totalCnc = 0;
+                        int totalCi = 0;
+                        int totalTW = 0;
+                        int totalCps = 0;
+                        int totalCr = 0;
                         for(int i = 0;i<resultsTable.getModel().getRowCount();i++)
                         {
                             totalCS += Integer.valueOf(resultsTable.getModel().getValueAt(i,1).toString()); //get the all row values at column index 1
+                            totalCtc += Integer.valueOf(resultsTable.getModel().getValueAt(i,2).toString()); 
+                            totalCnc += Integer.valueOf(resultsTable.getModel().getValueAt(i,3).toString()); 
+                            totalCi += Integer.valueOf(resultsTable.getModel().getValueAt(i,4).toString()); 
+                            totalTW += Integer.valueOf(resultsTable.getModel().getValueAt(i,5).toString()); 
+                            totalCps += Integer.valueOf(resultsTable.getModel().getValueAt(i,6).toString()); 
+                            totalCr += Integer.valueOf(resultsTable.getModel().getValueAt(i,7).toString()); 
                         }
                         CsTotal.setText(String.valueOf(totalCS));
-                                }
+                        CtcTotal.setText(String.valueOf(totalCtc));
+                        CncTotal.setText(String.valueOf(totalCnc));
+                        CiTotal.setText(String.valueOf(totalCi));
+                        TWTotal.setText(String.valueOf(totalTW));
+                        CpsTotal.setText(String.valueOf(totalCps));
+                        CrTotal.setText(String.valueOf(totalCr));
+                }
              }  
          };
         thread.setDaemon(true);
@@ -384,7 +440,7 @@ public class MainFrame extends javax.swing.JFrame
             if(!line.trim().isEmpty())
             {
                 CC.codeOnly(line);
-                Object JFill[] = {line,CC.getCs(),CC.getCtc(),CC.getCnc()};
+                Object JFill[] = {line,CC.getCs(),CC.getCtc(),CC.getCnc(),CC.getCi(),CC.getTW(),CC.getCps(),CC.getCr()};
                 model.addRow(JFill);
                 CC.resetAllGrades(); 
                 
@@ -394,11 +450,29 @@ public class MainFrame extends javax.swing.JFrame
         
         //Getting total values of collumn
         int totalCS = 0;
+        int totalCtc = 0;
+        int totalCnc = 0;
+        int totalCi = 0;
+        int totalTW = 0;
+        int totalCps = 0;
+        int totalCr = 0;
         for(int i = 0;i<resultsTable.getModel().getRowCount();i++)
         {
             totalCS += Integer.valueOf(resultsTable.getModel().getValueAt(i,1).toString()); //get the all row values at column index 1
+            totalCtc += Integer.valueOf(resultsTable.getModel().getValueAt(i,2).toString()); 
+            totalCnc += Integer.valueOf(resultsTable.getModel().getValueAt(i,3).toString()); 
+            totalCi += Integer.valueOf(resultsTable.getModel().getValueAt(i,4).toString()); 
+            totalTW += Integer.valueOf(resultsTable.getModel().getValueAt(i,5).toString()); 
+            totalCps += Integer.valueOf(resultsTable.getModel().getValueAt(i,6).toString()); 
+            totalCr += Integer.valueOf(resultsTable.getModel().getValueAt(i,7).toString()); 
         }
         CsTotal.setText(String.valueOf(totalCS));
+        CtcTotal.setText(String.valueOf(totalCtc));
+        CncTotal.setText(String.valueOf(totalCnc));
+        CiTotal.setText(String.valueOf(totalCi));
+        TWTotal.setText(String.valueOf(totalTW));
+        CpsTotal.setText(String.valueOf(totalCps));
+        CrTotal.setText(String.valueOf(totalCr));
                 
         
     }//GEN-LAST:event_Submit1ActionPerformed
@@ -470,8 +544,14 @@ public class MainFrame extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button Cancel;
+    private javax.swing.JTextField CiTotal;
+    private javax.swing.JTextField CncTotal;
+    private javax.swing.JTextField CpsTotal;
+    private javax.swing.JTextField CrTotal;
     private javax.swing.JTextField CsTotal;
+    private javax.swing.JTextField CtcTotal;
     private java.awt.Button Submit1;
+    private javax.swing.JTextField TWTotal;
     private javax.swing.JComboBox<String> codeType;
     private javax.swing.JComboBox<String> codeType1;
     private javax.swing.JFileChooser jFileChooser1;
