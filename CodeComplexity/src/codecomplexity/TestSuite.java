@@ -5,8 +5,6 @@
  */
 package codecomplexity;
 
-import javax.swing.SpringLayout;
-
 public final class TestSuite
 {
     public CodeComplexity testing;
@@ -201,7 +199,7 @@ public final class TestSuite
     {
         String testInput =  "while (x <= 4) \n" +
                             "for (int x = 2; x <= 4; x++) \n" +
-                            "do" ;
+                            "if(a>b)" ;
         assertCheck(testing.nestingControlStructure(testInput) == 3);   
         System.out.println("Nesting Control Structure Test Successful");
     }
