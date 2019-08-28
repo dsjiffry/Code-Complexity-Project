@@ -154,18 +154,20 @@ public class CodeComplexity {
         }
 
         //Calling All calculation methods
+        
         Cs += miscellaneousOperators(line);
         Cs += logicalOperators(line);
-        Cs += assignmentOperators(line);
+        Cs += assignmentOperators(line); 
         Cs += arithmeticOperators(line);
         Cs += relationalOperators(line);
         Cs += manipulators(line);
         Cs += bitwiseOperators(line);
         Cs += keywords(line);
         Cs += identifiers(line);
-        Cs += numbers(line);
+        Cs += numbers(line); 
         
         Ctc += conditionalControlStructure(line);
+        Ctc += iterativeControlStructure(line);
         
         Cnc += nestingControlStructure(line);
         
@@ -580,6 +582,28 @@ public class CodeComplexity {
             nestedblock = false;
         }
         
+        return total;
+    }
+    
+    public int iterativeControlStructure(String line)
+    {
+        int total = 0;
+        
+        total = total + (((line.length() - line.replaceAll("(?<!\\w)for(?!\\w)", "").length()) / 3)*2);
+        total = total + (((line.length() - line.replaceAll("(?<!\\w)while(?!\\w)", "").length()) / 5)*2 );
+        //Add method to calculate do-while
+        
+        if(total > 0)  //a loop detected detected
+        {            
+            //Detecting &&
+            total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])&&(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length()));
+            //Detecting ||
+            total = total + ((line.length() - line.replaceAll("\\|\\|", "").length()));
+            //Detecting &
+            total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])&(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())*2);
+            //Detecting |
+            total = total + ((line.length() - line.replaceAll("(?<!\\|)\\|(?!\\|)", "").length())*2);
+        }      
         return total;
     }
     
