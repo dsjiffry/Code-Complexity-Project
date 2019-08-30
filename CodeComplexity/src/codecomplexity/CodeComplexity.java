@@ -31,7 +31,8 @@ public class CodeComplexity {
     public boolean isComment = false;   //will be true if we are inside a multi-line comment
     public boolean isJava = false;      //will be true if code sample is in java
     public boolean isRecursive = false;
-    public boolean nestedblock = false;
+    public boolean nestedBlock = false;     //Used to identify nested blocks inside loops or 'if' statements
+    public boolean isDoWhileLoop = false;   //Used to skip the next 'while' keyword after 'do' detected
     public HashMap<String, ArrayList<Integer>> results = new HashMap<>();
 
     /*HashSet used to identify if a word is a keyword in */
@@ -550,24 +551,39 @@ public class CodeComplexity {
         return total;
     }
     
+    /**
+     * identify and grade nesting of control structures based on the level of nesting.
+     * @param line The code line to grade
+     * @return The obtained grade
+     */
     public int nestingControlStructure(String line)
     {
         int total = 0;
         // Detecting for,while or do-while loops
         total = total + ((line.length() - line.replaceAll("\\bfor\\b", "").length()) / 3)*braces;
         total = total + ((line.length() - line.replaceAll("\\bwhile\\b", "").length()) / 5)*braces;
-//        total = total + ((line.length() - line.replaceAll("\\bdo\\b", "").length()) / 2)*braces;  //Not needed becaues of 'while' at end?
+        total = total + ((line.length() - line.replaceAll("\\bdo\\b", "").length()) / 2)*braces;  //Not needed becaues of 'while' at end?
 
-        if(total > 0)
+        if(total > 0)   //one of the above keywords have been detected
         {
-            isRecursive = true; //Needed to calculate Cp Value, Cp value changes if recursion is present
+            isRecursive = true; //Needed to calculate Cp Value, since Cp value changes if recursion is present
+            line = line.trim();
+            if(line.matches(".*\\bwhile\\b.*") && isDoWhileLoop)    //skipping the 'while' after 'do'
+            {
+                return 0;
+            }
+            if(line.matches(".*\\bdo\\b.*"))    //if 'do' keyword detected
+            {
+                isDoWhileLoop = true;
+            }
         }
         
+        //Detecting 'if' statement
         total = total + ((line.length() - line.replaceAll("\\bif\\b", "").length()) / 2)*braces;
         
-        if(total >0 || nestedblock)
+        if(total >0 || nestedBlock)
         {
-            nestedblock = true;
+            nestedBlock = true;
             if(line.contains("{"))
             {
                 braces++;
@@ -579,7 +595,7 @@ public class CodeComplexity {
         }
         else if(braces == 1)
         {
-            nestedblock = false;
+            nestedBlock = false;
         }
         
         return total;
