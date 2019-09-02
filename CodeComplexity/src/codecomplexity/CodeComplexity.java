@@ -30,11 +30,11 @@ public class CodeComplexity {
     public int braces = 1;              //will be incremented for each opening brace and decremented for each closing brace
     public boolean isComment = false;   //will be true if we are inside a multi-line comment
     public boolean isJava = false;      //will be true if code sample is in java
-    public boolean isRecursive = false;
     public boolean nestedBlock = false;     //Used to identify nested blocks inside loops or 'if' statements
     public boolean isDoWhileLoop = false;   //Used to skip the next 'while' keyword after 'do' detected
     public HashMap<String, ArrayList<Integer>> results = new HashMap<>();
     private ArrayList<String> inheritance = new ArrayList<>();
+    private ArrayList<String> methodNames = new ArrayList<>();
 
     /*HashSet used to identify if a word is a keyword in */
     private HashSet<String> keyWordSet = new HashSet<String>();
@@ -84,7 +84,6 @@ public class CodeComplexity {
             e.printStackTrace();
         }
         
-        doCalculations();
         ArrayList<Integer> values = new ArrayList<>();
         values.add(Cs);
         values.add(Ctc);
@@ -103,7 +102,8 @@ public class CodeComplexity {
      * @param line the code line on which the methods will be executed
      */
     private void forEveryLine(String line) {
-        if (line.trim().isEmpty()) {
+        line = line.trim();
+        if (line.isEmpty()) {
             return;
         }
         if (isComment) {
@@ -178,7 +178,7 @@ public class CodeComplexity {
         
         
         
-        doCalculations();
+        doCalculations(line);
     }
 
 //****************************************************************************************************************************
@@ -486,7 +486,6 @@ public class CodeComplexity {
             try
             {
                 /*Get character value and remove it form line String*/
-                line.trim();
                 character = String.valueOf(line.charAt(0));
                 line = line.substring(1);
                 /*is character the start of a identifier*/
@@ -571,8 +570,6 @@ public class CodeComplexity {
 
         if(total > 0)   //one of the above keywords have been detected
         {
-            isRecursive = true; //Needed to calculate Cp Value, since Cp value changes if recursion is present
-            line = line.trim();
             if(line.matches(".*\\bwhile\\b.*") && isDoWhileLoop)    //skipping the 'while' after 'do'
             {
                 return 0;
@@ -628,10 +625,14 @@ public class CodeComplexity {
         return total;
     }
     
+    /**
+     * Grading inheritance within the code
+     * @param line The code line to grade
+     * @return The obtained grade
+     */
     public int inheritance(String line)
     {
         int total = 0;
-        line = line.trim();
         
         if(line.contains("extends"))
         {
@@ -653,19 +654,37 @@ public class CodeComplexity {
         return total;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * Grading Recursive calls within the code
+     * @param line The code line to grade
+     * @return The obtained grade
+     */
+    public boolean recursive(String line)
+    {
+        if(line.matches(".*\\b(public|private|protected)\\b(?!.*\\bmain\\b)(?=.*[\\(])(?=.*[\\)]).*"))  //Checks for given keywords, NOT conataining the word 'main' AND followed by a '(' AND a ')'
+        {
+            line = line.substring(0, line.indexOf("("));
+            
+            int lastIndex = line.split(" ").length-1;
+            String method = line.split(" ")[lastIndex]; //Name of the method
+            
+            if(!methodNames.contains(method))
+            {
+                methodNames.add(method);  //adding method name to array
+            }
+        }
+        else
+        {
+            for(String method : methodNames)
+            {
+                if(line.matches(".*\\b"+method+"\\b.*"))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     
     
@@ -673,13 +692,13 @@ public class CodeComplexity {
     /**
      * Calculating Ci, TW, Cps, Cr and Cp values
      */
-    public void doCalculations()
+    public void doCalculations(String line)
     {
         TW = Ctc + Cnc + Ci; 
         Cps = Cs * TW;
-        Cr = 2 * Cps;
-        if(isRecursive)
+        if(recursive(line))
         {
+            Cr = Cps*2;
             Cp = Cps + Cr;
         }
         else
