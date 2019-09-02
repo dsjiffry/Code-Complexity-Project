@@ -34,6 +34,7 @@ public class CodeComplexity {
     public boolean nestedBlock = false;     //Used to identify nested blocks inside loops or 'if' statements
     public boolean isDoWhileLoop = false;   //Used to skip the next 'while' keyword after 'do' detected
     public HashMap<String, ArrayList<Integer>> results = new HashMap<>();
+    private ArrayList<String> inheritance = new ArrayList<>();
 
     /*HashSet used to identify if a word is a keyword in */
     private HashSet<String> keyWordSet = new HashSet<String>();
@@ -172,6 +173,7 @@ public class CodeComplexity {
         
         Cnc += nestingControlStructure(line);
         
+        Ci += inheritance(line);
         
         
         
@@ -179,7 +181,10 @@ public class CodeComplexity {
         doCalculations();
     }
 
-    //////////////////////////////////////////////// Identifing Operators  ////////////////////////////////////////////////
+//****************************************************************************************************************************
+//--------------------------------------------------- Identifing Operators ---------------------------------------------------
+//****************************************************************************************************************************
+    
     /**
      * Identifies Miscellaneous operators in line of Code.
      *
@@ -622,6 +627,48 @@ public class CodeComplexity {
         }      
         return total;
     }
+    
+    public int inheritance(String line)
+    {
+        int total = 0;
+        line = line.trim();
+        
+        if(line.contains("extends"))
+        {
+            int i = 0;
+            while(!line.split(" ")[i].equalsIgnoreCase("extends"))
+            {
+                i++;
+            }
+            
+            if(!inheritance.contains(line.split(" ")[i+1]))
+            {
+                inheritance.add(line.split(" ")[i+1]);  //word after 'extends' keyword
+            }
+            inheritance.add(line.split(" ")[i-1]);  //word before 'extends' keyword           
+            
+            total = total + (inheritance.indexOf(line.split(" ")[i-1])+1);
+        }
+        
+        return total;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * Calculating Ci, TW, Cps, Cr and Cp values
