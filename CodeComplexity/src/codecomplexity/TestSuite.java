@@ -27,6 +27,8 @@ public final class TestSuite
         //Sprint 2
         testConditionalControlStructure();
         testnestingControlStructure();
+        testswitchControlStructure();
+        testtrycatchStructure();
     }
     
     
@@ -204,6 +206,24 @@ public final class TestSuite
         System.out.println("Nesting Control Structure Test Successful");
     }
     
+    public void testswitchControlStructure()
+    {
+        String testInput =  "switch(n){ \n" +
+                            "case 1: System.out.println(n);\n" +
+                            "case 2: System.out.println(n+2);\n" ;
+        assertCheck(testing.switchControlStructure(testInput) == 2);   
+        System.out.println("Switch Control Structure Test Successful");
+    }
+    
+    public void testtrycatchStructure()
+    {
+        String testInput =  "try { \n" +
+                            "accessFiles();}\n" +
+                            "catch(FileNotFoundException e){\n" +
+                            "System.out.println(\"File Not found\");}";
+        assertCheck(testing.trycatchStructure(testInput) == 1);   
+        System.out.println("Try Catch Structure Test Successful");
+    }
     
     
 //****************************************************************************************************************************

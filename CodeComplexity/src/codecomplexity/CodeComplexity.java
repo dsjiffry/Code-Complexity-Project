@@ -170,6 +170,8 @@ public class CodeComplexity {
         
         Ctc += conditionalControlStructure(line);
         Ctc += iterativeControlStructure(line);
+        Ctc += switchControlStructure(line);
+        Ctc += trycatchStructure(line);
         
         Cnc += nestingControlStructure(line);
         
@@ -621,6 +623,38 @@ public class CodeComplexity {
             total = total + ((line.length() - line.replaceAll("(?<![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])&(?![\\=\\<\\>\\!\\+\\-\\?\\|\\@\\#\\$\\%\\^\\&\\*\\/])", "").length())*2);
             //Detecting |
             total = total + ((line.length() - line.replaceAll("(?<!\\|)\\|(?!\\|)", "").length())*2);
+        }      
+        return total;
+    }
+    
+    public int switchControlStructure(String line)
+    {
+        int noSwitch = 0;
+        int total = 0;
+        
+        noSwitch += (((line.length() - line.replaceAll("(?<!\\w)switch(?!\\w)", "").length()) / 6));
+        
+        
+        if(noSwitch > 0)  //switch detected
+        {            
+            //Detecting cases
+            total = total + ((line.length() - line.replaceAll("(?<!\\w)case(?!\\w)", "").length()) / 4);
+        }      
+        return total;
+    }
+    
+    public int trycatchStructure(String line){
+        
+        int noTry = 0;
+        int total = 0;
+        
+        noTry += (((line.length() - line.replaceAll("(?<!\\w)try(?!\\w)", "").length()) / 3));
+        
+        
+        if(noTry > 0)  //try detected
+        {            
+            //Detecting catch
+            total = total + ((line.length() - line.replaceAll("(?<!\\w)catch(?!\\w)", "").length()) / 5);
         }      
         return total;
     }
