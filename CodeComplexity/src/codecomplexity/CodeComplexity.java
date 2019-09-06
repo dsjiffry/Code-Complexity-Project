@@ -19,20 +19,22 @@ import java.util.stream.Stream;
 
 public class CodeComplexity {
 
-    public int Cs = 0;
-    public int Ctc = 0;
-    public int Cnc = 0;
-    public int TW = 0;
-    public int Cps = 0;
-    public int Cr = 0;
-    public int Ci = 0;
-    public int Cp = 0;
-    public int braces = 1;              //will be incremented for each opening brace and decremented for each closing brace
-    public boolean isComment = false;   //will be true if we are inside a multi-line comment
+    private int Cs = 0;
+    private int Ctc = 0;
+    private int Cnc = 0;
+    private int TW = 0;
+    private int Cps = 0;
+    private int Cr = 0;
+    private int Ci = 0;
+    private int Cp = 0;
+    private int braces = 1;              //will be incremented for each opening brace and decremented for each closing brace
+    private boolean isComment = false;   //will be true if we are inside a multi-line comment
     public boolean isJava = false;      //will be true if code sample is in java
-    public boolean nestedBlock = false;     //Used to identify nested blocks inside loops or 'if' statements
-    public boolean isDoWhileLoop = false;   //Used to skip the next 'while' keyword after 'do' detected
-    public HashMap<String, ArrayList<Integer>> results = new HashMap<>();
+    private boolean nestedBlock = false;     //Used to identify nested blocks inside loops or 'if' statements
+    private boolean isDoWhileLoop = false;   //Used to skip the next 'while' keyword after 'do' detected
+    private int noSwitch = 0;
+    private int noTry = 0;
+    private HashMap<String, ArrayList<Integer>> results = new HashMap<>();
     private ArrayList<String> inheritance = new ArrayList<>();
     private ArrayList<String> methodNames = new ArrayList<>();
 
@@ -627,9 +629,9 @@ public class CodeComplexity {
         return total;
     }
     
+
     public int switchControlStructure(String line)
     {
-        int noSwitch = 0;
         int total = 0;
         
         noSwitch += (((line.length() - line.replaceAll("(?<!\\w)switch(?!\\w)", "").length()) / 6));
@@ -643,9 +645,9 @@ public class CodeComplexity {
         return total;
     }
     
+ 
     public int trycatchStructure(String line){
         
-        int noTry = 0;
         int total = 0;
         
         noTry += (((line.length() - line.replaceAll("(?<!\\w)try(?!\\w)", "").length()) / 3));
