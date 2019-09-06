@@ -670,21 +670,67 @@ public class CodeComplexity {
     {
         int total = 0;
         
-        if(line.contains("extends"))
+        //Java
+        if(isJava)
         {
-            int i = 0;
-            while(!line.split(" ")[i].equalsIgnoreCase("extends"))
+            if(line.contains("extends"))
             {
-                i++;
+                int i = 0;
+                while(!line.split(" ")[i].equalsIgnoreCase("extends"))
+                {
+                    i++;
+                }
+
+                if(!inheritance.contains(line.split(" ")[i+1]))
+                {
+                    inheritance.add(line.split(" ")[i+1]);  //word after 'extends' keyword
+                }
+                else    //If not a chain inheritance
+                {
+                    if(inheritance.indexOf(line.split(" ")[i+1]) == 0)
+                    {
+                        inheritance.remove(1);
+                    }
+                }
+                inheritance.add(line.split(" ")[i-1]);  //word before 'extends' keyword           
+
+                total = total + (inheritance.indexOf(line.split(" ")[i-1])+1);
             }
-            
-            if(!inheritance.contains(line.split(" ")[i+1]))
+        }
+        //C++
+        else
+        {
+            if(line.matches(".*\\bclass\\b(?=.*:).*")) //Contains character ':' somewhere after keyword 'class'
             {
-                inheritance.add(line.split(" ")[i+1]);  //word after 'extends' keyword
+                int i = 0;
+                while(!line.split(" ")[i].equalsIgnoreCase(":"))
+                {
+                    i++;
+                }
+                int y = i;               
+                
+                if(line.split(" ")[i+1].matches(".*\\b(public|private|protected)\\b.*"))    //If word after ':' is private/public/protected, then skip it
+                {
+                    i++;
+                }
+
+                if(!inheritance.contains(line.split(" ")[i+1]))
+                {
+                    inheritance.add(line.split(" ")[i+1]);  //word after ':'
+                }
+                else    //If not a chain inheritance
+                {
+                    if(inheritance.indexOf(line.split(" ")[i+1]) == 0)
+                    {
+                        inheritance.remove(1);
+                    }
+                }
+                
+                inheritance.add(line.split(" ")[y-1]);  //word before ':'    
+                
+
+                total = total + (inheritance.indexOf(line.split(" ")[y-1])+1);
             }
-            inheritance.add(line.split(" ")[i-1]);  //word before 'extends' keyword           
-            
-            total = total + (inheritance.indexOf(line.split(" ")[i-1])+1);
         }
         
         return total;
