@@ -163,5 +163,62 @@ public class TestNGSuite
         
         assertEquals(testing.identifiers(testInput), 14);
     }  
+    
+    
+    
+    
+    
+    
+    
+//****************************************************************************************************************************
+//--------------------------------------------------------- Sprint 2 ---------------------------------------------------------
+//****************************************************************************************************************************    
+    
+    public void testConditionalControlStructure(){
+        String testInput =  "if( a>b && a<c)\n" +
+                            "if(a>b&&a<c)\n" +
+                            "if( a>b || a<c)\n" +
+                            "if(a>b||a<c)\n" +
+                            "if(i & 1)\n" +
+                            "if(i&1)\n" +
+                            "if(i | 1)\n" +
+                            "if(i|1)" ;
+        
+        assertEquals(testing.conditionalControlStructure(testInput), 16);
+    }
+    
+    public void testnestingControlStructure()
+    {
+        String testInput =  "while (x <= 4) \n" +
+                            "for (int x = 2; x <= 4; x++) \n" +
+                            "if(a>b)" ;
+        assertEquals(testing.nestingControlStructure(testInput), 3);
+    }
+    
+    public void testswitchControlStructure()
+    {
+        String testInput =  "switch(n){ \n" +
+                            "case 1: System.out.println(n);\n" +
+                            "case 2: System.out.println(n+2);\n" ;
+        assertEquals(testing.switchControlStructure(testInput), 2);
+    }
+    
+    public void testtrycatchStructure()
+    {
+        String testInput =  "try { \n" +
+                            "accessFiles();}\n" +
+                            "catch(FileNotFoundException e){\n" +
+                            "System.out.println(\"File Not found\");}";
+        assertEquals(testing.trycatchStructure(testInput), 1);
+    }
+    
+    public void testIterativeControlStructure(){
+        String testInput =  "for( a>b && a<c)\n" +
+                            "while(a>b&&a<c)\n" +
+                            "do { do something }" + 
+                            "while( a>b || a<c)\n" ;
+        
+        assertEquals(testing.iterativeControlStructure(testInput), 12);
+    }
 
 }
