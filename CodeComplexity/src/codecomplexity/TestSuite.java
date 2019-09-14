@@ -29,6 +29,7 @@ public final class TestSuite
         testnestingControlStructure();
         testswitchControlStructure();
         testtrycatchStructure();
+        testIterativeControlStructure();
     }
     
     
@@ -223,6 +224,16 @@ public final class TestSuite
                             "System.out.println(\"File Not found\");}";
         assertCheck(testing.trycatchStructure(testInput) == 1);   
         System.out.println("Try Catch Structure Test Successful");
+    }
+    
+    public void testIterativeControlStructure(){
+        String testInput =  "for( a>b && a<c)\n" +
+                            "while(a>b&&a<c)\n" +
+                            "do { do something }" + 
+                            "while( a>b || a<c)\n" ;
+        
+        assertCheck(testing.iterativeControlStructure(testInput) == 12);
+        System.out.println("Iterative Control Structure Test Successful");
     }
     
     

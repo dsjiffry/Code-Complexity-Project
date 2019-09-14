@@ -613,7 +613,7 @@ public class CodeComplexity {
         
         total = total + (((line.length() - line.replaceAll("(?<!\\w)for(?!\\w)", "").length()) / 3)*2);
         total = total + (((line.length() - line.replaceAll("(?<!\\w)while(?!\\w)", "").length()) / 5)*2 );
-        //Add method to calculate do-while
+        //dont need add a seperate method to calculate do-while
         
         if(total > 0)  //a loop detected detected
         {            
