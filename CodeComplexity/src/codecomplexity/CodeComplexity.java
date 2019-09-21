@@ -540,7 +540,7 @@ public class CodeComplexity {
      * @param line The code line to grade
      * @return The obtained grade
      */
-    public int conditionalControlStructure(String line)
+  public int conditionalControlStructure(String line)
     {
         int total = 0;
         
@@ -668,7 +668,7 @@ public class CodeComplexity {
      */
     public int inheritance(String line)
     {
-        int total = 0;
+        int total = 1;  //Default starting value should be 1
         
         //Java
         if(isJava)
