@@ -478,57 +478,7 @@ public class CodeComplexity {
         return count;
     }
 
-    public int identifiers(String line) {
-        int programType = (isJava) ? 0 : 2;//set program type 0 for java and, 2 for C++.
-        String character = " "; 	//holds Temporary character value used with regex statement.
-        int namesCount = 0;  		//counter increased when an identifiers.
-        String word = ""; 			//word String hold an word value used to identify keywords.
-        initKeyWordSet(programType); //fill keyWordSet with keyword of given program type. 
-        //Loop to access iterate through line ends when line is empty.
-        while (!line.isEmpty()) {
-
-            try
-            {
-                /*Get character value and remove it form line String*/
-                character = String.valueOf(line.charAt(0));
-                line = line.substring(1);
-                /*is character the start of a identifier*/
-                if (Pattern.matches(CodeSizeConstrants.VARIABLE_START_WITH[programType], character)) {
-
-                    word = word + character;//add character to word
-
-                    /*Get character value and remove it form line String*/
-                    character = String.valueOf(line.charAt(0));
-                    line = line.substring(1);
-
-                    /*loop that check if the next character is part of 
-                                    * the identifier and then adds to word */
-                    do{
-
-                        word = word + character;//add character to word
-                        /*Get character value and remove it form line String*/
-                        if(line.isEmpty()) {
-                        	break;
-                        }
-                        character = String.valueOf(line.charAt(0));
-                        line = line.substring(1);
-                    }while (Pattern.matches(CodeSizeConstrants.VARIABLE_CHAR[programType], character));
-
-                    //If word is keyword reset word.
-                    if (keyWordSet.contains(word)) {
-                        word = "";//Reset word value to empty. 
-                    } else {
-                        /*If word is not a keyword 
-                                            reset word and increase namesCount.*/
-                        namesCount++;
-                        word = "";
-                    }
-                }
-            }catch(StringIndexOutOfBoundsException ignored)
-            {}
-        }
-        return namesCount;
-    }
+   
     
     
 //****************************************************************************************************************************
@@ -867,4 +817,9 @@ public class CodeComplexity {
         }
     }
 
+
+
+
+
+    
 }
