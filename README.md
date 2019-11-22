@@ -12,3 +12,15 @@
 * Cps	-> Complexity of a program statement
 * Cr	-> Complexity introduced due to recursion
 * Cp	-> Complexity of a program
+
+
+
+
+## Screenshots.
+
+
+![Copy Paste Code](https://raw.githubusercontent.com/dsjiffry/Code-Complexity-Project/master/Screenshots/Code%20Paste.PNG)
+
+![Directory Select](https://raw.githubusercontent.com/dsjiffry/Code-Complexity-Project/master/Screenshots/Directory%20Select.PNG)
+
+![Line Output](https://raw.githubusercontent.com/dsjiffry/Code-Complexity-Project/master/Screenshots/Line%20output.PNG)
