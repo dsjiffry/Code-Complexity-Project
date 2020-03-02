@@ -59,6 +59,8 @@
   
   <!-- Module CodeComplexity -->
   
+  <property name="basedir" value="./CodeComplexity"/>
+  
   <dirname property="module.codecomplexity.basedir" file="${ant.file}"/>
   
   
