@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/dsjiffry/Code-Complexity-Project.svg?branch=master)](https://travis-ci.com/dsjiffry/Code-Complexity-Project)
+
 # Code Complexity Project (Y03)
 
 ## Developed a tool to measure the complexity of Java/C++ code by analyzing each code statement.
