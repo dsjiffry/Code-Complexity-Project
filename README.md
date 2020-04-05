@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/dsjiffry/Code-Complexity-Project.svg?branch=master)](https://travis-ci.com/dsjiffry/Code-Complexity-Project)
+[![Java CI with Maven](https://github.com/dsjiffry/Code-Complexity-Project/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)](https://github.com/dsjiffry/Code-Complexity-Project/actions?query=workflow%3A%22Java+CI+with+Maven%22)
 
 # Code Complexity Project (Y03)
 
